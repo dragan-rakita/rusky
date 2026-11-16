@@ -1,0 +1,11 @@
+[
+  {
+    "code": "ru",
+    "name": "Русский",
+    "english": "Russian",
+    "native": "sr-Latn",
+    "nativeName": "Srpski (latinica)",
+    "weekdays": ["воскресе́нье", "понеде́льник", "вто́рник", "среда́", "четве́рг", "пя́тница", "суббо́та"],
+    "levels": ["a1"]
+  }
+]

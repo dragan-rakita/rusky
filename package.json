@@ -1,0 +1,42 @@
+{
+  "name": "rusky",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24.12.0"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "yarn workspace @rusky/web run dev",
+    "dev:api": "yarn workspace @rusky/api run dev",
+    "build": "yarn workspace @rusky/api run build &&yarn workspace @rusky/web run build",
+    "check": "yarn workspace @rusky/core run check && yarn workspace @rusky/api run check && yarn workspace @rusky/web run check",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write .",
+    "test": "vitest --run",
+    "db:generate": "yarn workspace @rusky/api run db:generate",
+    "db:migrate": "yarn workspace @rusky/api run db:migrate",
+    "content:import": "node scripts/import-words.mjs",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.0.4",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-svelte": "^3.17.0",
+    "fflate": "^0.8.3",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-svelte": "^3.5.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.1",
+    "vitest": "^4.1.3"
+  }
+}

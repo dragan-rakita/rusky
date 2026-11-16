@@ -1,0 +1,192 @@
+@import 'tailwindcss';
+@import '@fontsource/golos-text/400.css';
+@import '@fontsource/golos-text/500.css';
+@import '@fontsource/golos-text/600.css';
+@import '@fontsource/golos-text/700.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Red is the language being learned, blue the one you speak: the two sides of a card.
+   Every other colour is neutral, and dark surfaces carry no tint at all. */
+:root {
+  color-scheme: light;
+  --bg: #f1f3f6;
+  --card: #ffffff;
+  --paper: #ffffff;
+  --paper-edge: #ffffff;
+  --ink: #161b26;
+  --muted: #5b6372;
+  --soft: #4a5263;
+  --line: #e3e7ed;
+  --edge: #dde1e8;
+  --strong: #c9cfd9;
+  --row: #eef0f4;
+  --seg: #e3e7ed;
+  --seg-on: #ffffff;
+  --target: #d6334a;
+  --native: #2f5fc4;
+  --btn: #161b26;
+  --btn-fg: #ffffff;
+  --btn-sub: #c9cfd9;
+  --nav: #ffffff;
+  --sh-soft: 0 1px 2px rgb(22 27 38 / 0.06), 0 8px 24px rgb(22 27 38 / 0.06);
+  --sh-lift: 0 1px 2px rgb(22 27 38 / 0.08), 0 10px 28px rgb(22 27 38 / 0.12);
+  --sh-seg: 0 1px 3px rgb(22 27 38 / 0.14);
+
+  /* The status bar is translucent on an installed iPhone app, so the page reserves its height. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --card: #161616;
+  --paper: #1f1f1f;
+  --paper-edge: #2e2e2e;
+  --ink: #f2f2f2;
+  --muted: #9a9a9a;
+  --soft: #b0b0b0;
+  --line: #262626;
+  --edge: #2e2e2e;
+  --strong: #3d3d3d;
+  --row: #222222;
+  --seg: #1c1c1c;
+  --seg-on: #333333;
+  --target: #ff5c70;
+  --native: #7aa2ff;
+  --btn: #f2f2f2;
+  --btn-fg: #0a0a0a;
+  --btn-sub: #4a4a4a;
+  --nav: #121212;
+  --sh-soft: none;
+  --sh-lift: 0 12px 32px rgb(0 0 0 / 0.55);
+  --sh-seg: none;
+}
+
+@theme inline {
+  --font-sans: 'Golos Text', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-paper: var(--paper);
+  --color-paper-edge: var(--paper-edge);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-soft: var(--soft);
+  --color-line: var(--line);
+  --color-edge: var(--edge);
+  --color-strong: var(--strong);
+  --color-row: var(--row);
+  --color-seg: var(--seg);
+  --color-seg-on: var(--seg-on);
+  --color-target: var(--target);
+  --color-native: var(--native);
+  --color-btn: var(--btn);
+  --color-btn-fg: var(--btn-fg);
+  --color-btn-sub: var(--btn-sub);
+  --color-nav: var(--nav);
+  --shadow-soft: var(--sh-soft);
+  --shadow-lift: var(--sh-lift);
+  --shadow-seg: var(--sh-seg);
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    min-height: 100svh;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--native);
+    outline-offset: 2px;
+  }
+}
+
+/* Grammar notes come from Markdown, so they are styled by element rather than by class. */
+@layer components {
+  /* A box on the Today screen, drawn as a pile of cards seen from the side. */
+  .paper-stack {
+    background: repeating-linear-gradient(to top, var(--paper) 0 3px, var(--edge) 3px 4px);
+  }
+
+  .grammar {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .grammar h3 {
+    margin: 22px 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .grammar p {
+    margin: 10px 0;
+  }
+
+  .grammar ul {
+    margin: 10px 0;
+    padding-left: 20px;
+    list-style: disc;
+  }
+
+  .grammar li {
+    margin: 4px 0;
+  }
+
+  .grammar strong {
+    font-weight: 700;
+  }
+
+  .grammar .table-wrap {
+    margin: 12px 0;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+    padding: 2px 14px 4px;
+  }
+
+  .grammar table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .grammar th {
+    padding: 10px 10px 8px 0;
+    text-align: left;
+    vertical-align: bottom;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .grammar td {
+    padding: 9px 10px 9px 0;
+    border-top: 1px solid var(--row);
+    vertical-align: top;
+  }
+
+  .grammar td strong,
+  .grammar .stress {
+    color: var(--target);
+  }
+}
