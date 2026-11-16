@@ -6,7 +6,6 @@
   import { content } from '$lib/modules/content/content.svelte';
   import { progress } from '$lib/modules/progress/progress.svelte';
   import { MONO_LABEL, PROFILE_ACTION } from '$lib/modules/ui/constants';
-  import BackLink from '$lib/modules/ui/components/back-link.svelte';
 
   const connectorUrl = `${window.location.origin}${MCP_PATH}`;
 
@@ -128,9 +127,7 @@
 </script>
 
 <div class="contents lg:mx-auto lg:block lg:w-full lg:max-w-[560px]">
-  <BackLink href="/" label="Today" />
-
-  <h1 class="px-5 pt-1 text-3xl leading-tight font-bold tracking-[-0.02em]">Profile</h1>
+  <h1 class="px-5 pt-5 text-3xl leading-tight font-bold tracking-[-0.02em] lg:pt-1">Profile</h1>
 
   <div class="mx-5 mt-3.5 flex items-center gap-3.5">
     <span

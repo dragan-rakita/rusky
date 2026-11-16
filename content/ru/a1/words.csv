@@ -1,170 +1,170 @@
 id,lesson,category,target,native,english,note
-ru-a1-w-001,1,Greetings,Приве́т!,Ćao! / Zdravo!,Hi!,
-ru-a1-w-002,1,Greetings,Здра́вствуйте!,Dobar dan! (formalno),Hello! (formal),first в is silent
-ru-a1-w-003,1,Greetings,До́брое у́тро!,Dobro jutro!,Good morning!,
-ru-a1-w-004,1,Greetings,Меня́ зову́т ...,Zovem se ...,My name is ...,lit. 'they call me'
-ru-a1-w-005,1,Greetings,Как тебя́ зову́т?,Kako se zoveš?,What's your name? (informal),
-ru-a1-w-006,1,Greetings,Как вас зову́т?,Kako se zovete?,What's your name? (formal),
-ru-a1-w-007,1,Greetings,Я из ...,Ja sam iz ...,I'm from ...,из + genitive: из Ба́ня-Луки
-ru-a1-w-008,1,Greetings,О́чень прия́тно.,Drago mi je.,Nice to meet you.,
-ru-a1-w-009,1,Greetings,Как дела́?,Kako si?,How are you?,
-ru-a1-w-010,1,Greetings,хорошо́,dobro,good / well,pronounced 'harashó'
-ru-a1-w-011,1,Greetings,спаси́бо,hvala,thank you,pronounced 'spasíba'
-ru-a1-w-012,1,Greetings,Пока́!,Ćao! (na rastanku),Bye!,
-ru-a1-w-013,1,Greetings,До свида́ния!,Doviđenja!,Goodbye!,
-ru-a1-w-014,1,Greetings,да,da,yes,
-ru-a1-w-015,1,Greetings,нет,ne / nema,no / there isn't,
-ru-a1-w-016,1,People,студе́нт,student,student,
-ru-a1-w-017,1,People,программи́ст,programer,programmer,double м
-ru-a1-w-018,2,Questions,Что э́то?,Šta je ovo?,What is this?,что = 'shto'
-ru-a1-w-019,2,Basics,э́то,ovo / to,this / it,"always э, never е"
-ru-a1-w-020,2,Nouns,дом,kuća,house,masc.
-ru-a1-w-021,2,Nouns,кни́га,knjiga,book,fem.
-ru-a1-w-022,2,Nouns,окно́,prozor,window,neut.
-ru-a1-w-023,2,Nouns,соба́ка,pas,dog,fem.
-ru-a1-w-024,2,Nouns,маши́на,auto,car,fem.
-ru-a1-w-025,2,Nouns,телефо́н,telefon,phone,masc.
-ru-a1-w-026,2,Nouns,ко́фе,kafa,coffee,"masc., never changes"
-ru-a1-w-027,2,Nouns,вода́,voda,water,fem.; acc. во́ду
-ru-a1-w-028,2,Nouns,мо́ре,more,sea,neut.
-ru-a1-w-029,2,Numbers,ноль,nula,0,
-ru-a1-w-030,2,Numbers,оди́н,jedan,1,
-ru-a1-w-031,2,Numbers,два,dva,2,
-ru-a1-w-032,2,Numbers,три,tri,3,
-ru-a1-w-033,2,Numbers,четы́ре,četiri,4,
-ru-a1-w-034,2,Numbers,пять,pet,5,ь at the end
-ru-a1-w-035,2,Numbers,шесть,šest,6,
-ru-a1-w-036,2,Numbers,семь,sedam,7,
-ru-a1-w-037,2,Numbers,во́семь,osam,8,
-ru-a1-w-038,2,Numbers,де́вять,devet,9,
-ru-a1-w-039,2,Numbers,де́сять,deset,10,
-ru-a1-w-040,3,Pronouns,я,ja,I,
-ru-a1-w-041,3,Pronouns,ты,ti,you (informal),
-ru-a1-w-042,3,Pronouns,он,on,he,
-ru-a1-w-043,3,Pronouns,она́,ona,she,
-ru-a1-w-044,3,Pronouns,мы,mi,we,"ы, never и"
-ru-a1-w-045,3,Pronouns,вы,vi,you (formal / plural),
-ru-a1-w-046,3,Pronouns,они́,oni,they,
-ru-a1-w-047,3,Phrases,У меня́ есть ...,Imam ...,I have ...,lit. 'at me there is'
-ru-a1-w-048,3,Phrases,у тебя́ / у него́ / у неё,kod tebe / kod njega / kod nje,you / he / she has,
-ru-a1-w-049,3,Phrases,у нас / у вас / у них,kod nas / kod vas / kod njih,we / you / they have,
-ru-a1-w-050,3,Phrases,У меня́ нет вре́мени.,Nemam vremena.,I don't have time.,нет + genitive
-ru-a1-w-051,3,Nouns,брат,brat,brother,no ь (брать = to take)
-ru-a1-w-052,3,Nouns,вре́мя,vreme,time,
-ru-a1-w-053,4,Verbs,рабо́тать,raditi,to work,group 1 (‑ать)
-ru-a1-w-054,4,Verbs,знать,znati,to know,group 1
-ru-a1-w-055,4,Verbs,чита́ть,čitati,to read,group 1
-ru-a1-w-056,4,Verbs,понима́ть,razumeti,to understand,group 1
-ru-a1-w-057,4,Verbs,де́лать,raditi / činiti,to do,group 1
-ru-a1-w-058,4,Verbs,игра́ть,igrati,to play,group 1
-ru-a1-w-059,4,Phrases,Я не понима́ю.,Ne razumem.,I don't understand.,
-ru-a1-w-060,4,Phrases,Что ты де́лаешь?,Šta radiš?,What are you doing?,
-ru-a1-w-061,5,Verbs,говори́ть,govoriti,to speak,group 2 (‑ить)
-ru-a1-w-062,5,Verbs,смотре́ть,gledati,to watch,group 2; NOT 'гледать'
-ru-a1-w-063,5,Verbs,звони́ть,zvati (telefonom),to call,group 2
-ru-a1-w-064,5,Verbs,по́мнить,pamtiti / sećati se,to remember,group 2
-ru-a1-w-065,5,Phrases,по-ру́сски,na ruskom,in Russian,with hyphen
-ru-a1-w-066,5,Phrases,по-англи́йски,na engleskom,in English,with hyphen
-ru-a1-w-067,5,Nouns,телеви́зор,televizor,TV,
-ru-a1-w-068,6,Questions,где?,gde?,where?,
-ru-a1-w-069,6,Prepositions,в,u,in,+ prepositional for location
-ru-a1-w-070,6,Prepositions,на,na,on / at,
-ru-a1-w-071,6,Prepositions,из,iz,from,
-ru-a1-w-072,6,Verbs,жить,živeti,to live,"irregular: живу́, живёшь, живу́т"
-ru-a1-w-073,6,Phrases,Я до́ма.,Kod kuće sam.,I'm at home.,
-ru-a1-w-074,6,Nouns,стол,sto,table,на столе́
-ru-a1-w-075,6,Places,Москва́,Moskva,Moscow,в Москве́
-ru-a1-w-076,6,Places,Белгра́д,Beograd,Belgrade,в Белгра́де
-ru-a1-w-077,6,Places,Ба́ня-Лука,Banja Luka,Banja Luka,в Ба́ня-Луке / из Ба́ня-Луки
-ru-a1-w-078,7,Verbs,люби́ть,voleti,to love / like,я люблю́ (extra л)
-ru-a1-w-079,7,Verbs,ви́деть,videti,to see,я ви́жу
-ru-a1-w-080,7,Nouns,фильм,film,film,ь after л
-ru-a1-w-081,8,Time,вчера́,juče,yesterday,
-ru-a1-w-082,9,Numbers,оди́ннадцать,jedanaest,11,‑надцать = ‑naest
-ru-a1-w-083,9,Numbers,двена́дцать,dvanaest,12,
-ru-a1-w-084,9,Numbers,трина́дцать,trinaest,13,
-ru-a1-w-085,9,Numbers,четы́рнадцать,četrnaest,14,
-ru-a1-w-086,9,Numbers,пятна́дцать,petnaest,15,
-ru-a1-w-087,9,Numbers,шестна́дцать,šesnaest,16,
-ru-a1-w-088,9,Numbers,семна́дцать,sedamnaest,17,
-ru-a1-w-089,9,Numbers,восемна́дцать,osamnaest,18,
-ru-a1-w-090,9,Numbers,девятна́дцать,devetnaest,19,
-ru-a1-w-091,9,Numbers,два́дцать,dvadeset,20,
-ru-a1-w-092,9,Numbers,три́дцать,trideset,30,
-ru-a1-w-093,9,Numbers,со́рок,četrdeset,40,exception
-ru-a1-w-094,9,Numbers,пятьдеся́т,pedeset,50,ь in the middle
-ru-a1-w-095,9,Numbers,шестьдеся́т,šezdeset,60,ь in the middle
-ru-a1-w-096,9,Numbers,се́мьдесят,sedamdeset,70,ь in the middle
-ru-a1-w-097,9,Numbers,во́семьдесят,osamdeset,80,ь in the middle
-ru-a1-w-098,9,Numbers,девяно́сто,devedeset,90,exception
-ru-a1-w-099,9,Numbers,сто,sto,100,
-ru-a1-w-100,9,Phrases,Ско́лько тебе́ лет?,Koliko imaš godina?,How old are you?,
-ru-a1-w-101,9,Phrases,Мне ... го́да / лет.,Imam ... godina.,I'm ... years old.,"1 год, 2–4 го́да, 5+ лет"
-ru-a1-w-102,9,Phrases,Ско́лько сто́ит?,Koliko košta?,How much does it cost?,
-ru-a1-w-103,10,Possessives,мой / моя́ / моё / мои́,moj / moja / moje / moji,my,
-ru-a1-w-104,10,Possessives,твой / твоя́ / твоё / твои́,tvoj / tvoja / tvoje / tvoji,your (informal),
-ru-a1-w-105,10,Family,оте́ц,otac,father,gen. отца́
-ru-a1-w-106,10,Family,па́па,tata,dad,
-ru-a1-w-107,10,Family,мать,majka,mother,
-ru-a1-w-108,10,Family,ма́ма,mama,mom,
-ru-a1-w-109,10,Family,сестра́,sestra,sister,у сестры́
-ru-a1-w-110,10,Family,роди́тели,roditelji,parents,
-ru-a1-w-111,10,Family,де́вушка,devojka,girlfriend,
-ru-a1-w-112,10,Family,семья́,porodica,family,false friend
-ru-a1-w-113,10,Family,фами́лия,prezime,surname,false friend
-ru-a1-w-114,10,Nouns,и́мя,ime,name,neut.
-ru-a1-w-115,11,Verbs,хоте́ть,hteti,to want,"irregular: хочу́, хо́чет, хотя́т"
-ru-a1-w-116,11,Verbs,спать,spavati,to sleep,
-ru-a1-w-117,11,Verbs,учи́ть,učiti,to learn / study,
-ru-a1-w-118,12,Days,понеде́льник,ponedeljak,Monday,lowercase
-ru-a1-w-119,12,Days,вто́рник,utorak,Tuesday,
-ru-a1-w-120,12,Days,среда́,sreda,Wednesday,в сре́ду
-ru-a1-w-121,12,Days,четве́рг,četvrtak,Thursday,
-ru-a1-w-122,12,Days,пя́тница,petak,Friday,в пя́тницу
-ru-a1-w-123,12,Days,суббо́та,subota,Saturday,double бб
-ru-a1-w-124,12,Days,воскресе́нье,nedelja,Sunday,
-ru-a1-w-125,12,Time,неде́ля,sedmica / nedelja,week,false friend
-ru-a1-w-126,12,Time,день,dan,day,
-ru-a1-w-127,12,Time,сего́дня,danas,today,г is silent
-ru-a1-w-128,12,Time,за́втра,sutra,tomorrow,
-ru-a1-w-129,12,Time,уже́,već,already,
-ru-a1-w-130,12,Phrases,Како́й сего́дня день?,Koji je danas dan?,What day is it today?,
-ru-a1-w-131,13,Café,Мо́жно ...?,Može ...?,Can I have ...?,+ accusative
-ru-a1-w-132,13,Café,"Да́йте, пожа́луйста, ...","Dajte, molim vas, ...",Please give me ...,
-ru-a1-w-133,13,Café,пожа́луйста,molim / izvolite,please / you're welcome,
-ru-a1-w-134,13,Café,"Счёт, пожа́луйста.","Račun, molim.","The bill, please.",
-ru-a1-w-135,13,Café,Ско́лько с меня́?,Koliko vam dugujem?,How much do I owe?,
-ru-a1-w-136,13,Café,Я бу́ду ...,Ja ću ...,I'll have ...,
-ru-a1-w-137,13,Café,Что́-нибудь ещё?,Još nešto?,Anything else?,
-ru-a1-w-138,13,Food,чай,čaj,tea,
-ru-a1-w-139,13,Food,сок,sok,juice,
-ru-a1-w-140,13,Food,пи́во,pivo,beer,
-ru-a1-w-141,13,Food,хлеб,hleb,bread,
-ru-a1-w-142,13,Food,суп,supa,soup,
-ru-a1-w-143,13,Food,сала́т,salata,salad,"masc., no change in acc."
-ru-a1-w-144,13,Food,мя́со,meso,meat,
-ru-a1-w-145,13,Food,ры́ба,riba,fish,acc. ры́бу
-ru-a1-w-146,13,Basics,и,i,and,
-ru-a1-w-147,14,Time,Кото́рый час?,Koliko je sati?,What time is it?,"ы, not и"
-ru-a1-w-148,14,Time,Ско́лько вре́мени?,Koliko je sati?,What time is it?,
-ru-a1-w-149,14,Time,час / часа́ / часо́в,sat / sata / sati,hour (1 / 2–4 / 5+),
-ru-a1-w-150,14,Time,мину́та,minut,minute,"2 мину́ты, 5 мину́т"
-ru-a1-w-151,14,Time,сейча́с,sada,now,
-ru-a1-w-152,14,Time,у́тром,ujutru,in the morning,
-ru-a1-w-153,14,Time,днём,danju / popodne,in the afternoon,
-ru-a1-w-154,14,Time,ве́чером,uveče,in the evening,в семь часо́в ве́чера
-ru-a1-w-155,14,Time,но́чью,noću,at night,
-ru-a1-w-156,14,Time,Во ско́лько?,U koliko sati?,At what time?,"во, not в"
-ru-a1-w-157,14,Verbs,есть,jesti,to eat,"irregular: ем, ешь, ест"
-ru-a1-w-158,14,Verbs,е́хать,ići (vozilom),to go (by vehicle),ты е́дешь
-ru-a1-w-159,15,Adjectives,но́вый,nov,new,"‑ый, not ‑ий"
-ru-a1-w-160,15,Adjectives,ста́рый,star,old,
-ru-a1-w-161,15,Adjectives,большо́й,velik,big,
-ru-a1-w-162,15,Adjectives,ма́ленький,mali,small,
-ru-a1-w-163,15,Adjectives,хоро́ший,dobar,good,
-ru-a1-w-164,15,Adjectives,плохо́й,loš,bad,
-ru-a1-w-165,15,Adjectives,краси́вый,lep,beautiful,"‑ый, not ‑ий"
-ru-a1-w-166,15,Adjectives,интере́сный,zanimljiv,interesting,
-ru-a1-w-167,15,Adjectives,ру́сский,ruski,Russian,
-ru-a1-w-168,15,Adjectives,чёрный,crn,black,
-ru-a1-w-169,15,Nouns,го́род,grad,city,
+ru-a1-w-001,1,Greetings,Приве́т!,Ћао! / Здраво!,Hi!,
+ru-a1-w-002,1,Greetings,Здра́вствуйте!,Добар дан! (формално),Hello! (formal),first в is silent
+ru-a1-w-003,1,Greetings,До́брое у́тро!,Добро јутро!,Good morning!,
+ru-a1-w-004,1,Greetings,Меня́ зову́т ...,Зовем се ...,My name is ...,lit. 'they call me'
+ru-a1-w-005,1,Greetings,Как тебя́ зову́т?,Како се зовеш?,What's your name? (informal),
+ru-a1-w-006,1,Greetings,Как вас зову́т?,Како се зовете?,What's your name? (formal),
+ru-a1-w-007,1,Greetings,Я из ...,Ја сам из ...,I'm from ...,из + genitive: из Ба́ня-Луки
+ru-a1-w-008,1,Greetings,О́чень прия́тно.,Драго ми је.,Nice to meet you.,
+ru-a1-w-009,1,Greetings,Как дела́?,Како си?,How are you?,
+ru-a1-w-010,1,Greetings,хорошо́,добро,good / well,pronounced 'харашо́'
+ru-a1-w-011,1,Greetings,спаси́бо,хвала,thank you,pronounced 'спаси́ба'
+ru-a1-w-012,1,Greetings,Пока́!,Ћао! (на растанку),Bye!,
+ru-a1-w-013,1,Greetings,До свида́ния!,Довиђења!,Goodbye!,
+ru-a1-w-014,1,Greetings,да,да,yes,
+ru-a1-w-015,1,Greetings,нет,не / нема,no / there isn't,
+ru-a1-w-016,1,People,студе́нт,студент,student,
+ru-a1-w-017,1,People,программи́ст,програмер,programmer,double м
+ru-a1-w-018,2,Questions,Что э́то?,Шта је ово?,What is this?,что = 'што'
+ru-a1-w-019,2,Basics,э́то,ово / то,this / it,"always э, never е"
+ru-a1-w-020,2,Nouns,дом,кућа,house,masc.
+ru-a1-w-021,2,Nouns,кни́га,књига,book,fem.
+ru-a1-w-022,2,Nouns,окно́,прозор,window,neut.
+ru-a1-w-023,2,Nouns,соба́ка,пас,dog,fem.
+ru-a1-w-024,2,Nouns,маши́на,ауто,car,fem.
+ru-a1-w-025,2,Nouns,телефо́н,телефон,phone,masc.
+ru-a1-w-026,2,Nouns,ко́фе,кафа,coffee,"masc., never changes"
+ru-a1-w-027,2,Nouns,вода́,вода,water,fem.; acc. во́ду
+ru-a1-w-028,2,Nouns,мо́ре,море,sea,neut.
+ru-a1-w-029,2,Numbers,ноль,нула,0,
+ru-a1-w-030,2,Numbers,оди́н,један,1,
+ru-a1-w-031,2,Numbers,два,два,2,
+ru-a1-w-032,2,Numbers,три,три,3,
+ru-a1-w-033,2,Numbers,четы́ре,четири,4,
+ru-a1-w-034,2,Numbers,пять,пет,5,ь at the end
+ru-a1-w-035,2,Numbers,шесть,шест,6,
+ru-a1-w-036,2,Numbers,семь,седам,7,
+ru-a1-w-037,2,Numbers,во́семь,осам,8,
+ru-a1-w-038,2,Numbers,де́вять,девет,9,
+ru-a1-w-039,2,Numbers,де́сять,десет,10,
+ru-a1-w-040,3,Pronouns,я,ја,I,
+ru-a1-w-041,3,Pronouns,ты,ти,you (informal),
+ru-a1-w-042,3,Pronouns,он,он,he,
+ru-a1-w-043,3,Pronouns,она́,она,she,
+ru-a1-w-044,3,Pronouns,мы,ми,we,"ы, never и"
+ru-a1-w-045,3,Pronouns,вы,ви,you (formal / plural),
+ru-a1-w-046,3,Pronouns,они́,они,they,
+ru-a1-w-047,3,Phrases,У меня́ есть ...,Имам ...,I have ...,lit. 'at me there is'
+ru-a1-w-048,3,Phrases,у тебя́ / у него́ / у неё,код тебе / код њега / код ње,you / he / she has,
+ru-a1-w-049,3,Phrases,у нас / у вас / у них,код нас / код вас / код њих,we / you / they have,
+ru-a1-w-050,3,Phrases,У меня́ нет вре́мени.,Немам времена.,I don't have time.,нет + genitive
+ru-a1-w-051,3,Nouns,брат,брат,brother,no ь (брать = to take)
+ru-a1-w-052,3,Nouns,вре́мя,вријеме,time,
+ru-a1-w-053,4,Verbs,рабо́тать,радити,to work,group 1 (‑ать)
+ru-a1-w-054,4,Verbs,знать,знати,to know,group 1
+ru-a1-w-055,4,Verbs,чита́ть,читати,to read,group 1
+ru-a1-w-056,4,Verbs,понима́ть,разумјети,to understand,group 1
+ru-a1-w-057,4,Verbs,де́лать,радити / чинити,to do,group 1
+ru-a1-w-058,4,Verbs,игра́ть,играти,to play,group 1
+ru-a1-w-059,4,Phrases,Я не понима́ю.,Не разумијем.,I don't understand.,
+ru-a1-w-060,4,Phrases,Что ты де́лаешь?,Шта радиш?,What are you doing?,
+ru-a1-w-061,5,Verbs,говори́ть,говорити,to speak,group 2 (‑ить)
+ru-a1-w-062,5,Verbs,смотре́ть,гледати,to watch,group 2; NOT 'гледать'
+ru-a1-w-063,5,Verbs,звони́ть,звати (телефоном),to call,group 2
+ru-a1-w-064,5,Verbs,по́мнить,памтити / сјећати се,to remember,group 2
+ru-a1-w-065,5,Phrases,по-ру́сски,на руском,in Russian,with hyphen
+ru-a1-w-066,5,Phrases,по-англи́йски,на енглеском,in English,with hyphen
+ru-a1-w-067,5,Nouns,телеви́зор,телевизор,TV,
+ru-a1-w-068,6,Questions,где?,гдје?,where?,
+ru-a1-w-069,6,Prepositions,в,у,in,+ prepositional for location
+ru-a1-w-070,6,Prepositions,на,на,on / at,
+ru-a1-w-071,6,Prepositions,из,из,from,
+ru-a1-w-072,6,Verbs,жить,живјети,to live,"irregular: живу́, живёшь, живу́т"
+ru-a1-w-073,6,Phrases,Я до́ма.,Код куће сам.,I'm at home.,
+ru-a1-w-074,6,Nouns,стол,сто,table,на столе́
+ru-a1-w-075,6,Places,Москва́,Москва,Moscow,в Москве́
+ru-a1-w-076,6,Places,Белгра́д,Београд,Belgrade,в Белгра́де
+ru-a1-w-077,6,Places,Ба́ня-Лука,Бања Лука,Banja Luka,в Ба́ня-Луке / из Ба́ня-Луки
+ru-a1-w-078,7,Verbs,люби́ть,вољети,to love / like,я люблю́ (extra л)
+ru-a1-w-079,7,Verbs,ви́деть,видјети,to see,я ви́жу
+ru-a1-w-080,7,Nouns,фильм,филм,film,ь after л
+ru-a1-w-081,8,Time,вчера́,јуче,yesterday,
+ru-a1-w-082,9,Numbers,оди́ннадцать,једанаест,11,‑надцать = ‑наест
+ru-a1-w-083,9,Numbers,двена́дцать,дванаест,12,
+ru-a1-w-084,9,Numbers,трина́дцать,тринаест,13,
+ru-a1-w-085,9,Numbers,четы́рнадцать,четрнаест,14,
+ru-a1-w-086,9,Numbers,пятна́дцать,петнаест,15,
+ru-a1-w-087,9,Numbers,шестна́дцать,шеснаест,16,
+ru-a1-w-088,9,Numbers,семна́дцать,седамнаест,17,
+ru-a1-w-089,9,Numbers,восемна́дцать,осамнаест,18,
+ru-a1-w-090,9,Numbers,девятна́дцать,деветнаест,19,
+ru-a1-w-091,9,Numbers,два́дцать,двадесет,20,
+ru-a1-w-092,9,Numbers,три́дцать,тридесет,30,
+ru-a1-w-093,9,Numbers,со́рок,четрдесет,40,exception
+ru-a1-w-094,9,Numbers,пятьдеся́т,педесет,50,ь in the middle
+ru-a1-w-095,9,Numbers,шестьдеся́т,шездесет,60,ь in the middle
+ru-a1-w-096,9,Numbers,се́мьдесят,седамдесет,70,ь in the middle
+ru-a1-w-097,9,Numbers,во́семьдесят,осамдесет,80,ь in the middle
+ru-a1-w-098,9,Numbers,девяно́сто,деведесет,90,exception
+ru-a1-w-099,9,Numbers,сто,сто,100,
+ru-a1-w-100,9,Phrases,Ско́лько тебе́ лет?,Колико имаш година?,How old are you?,
+ru-a1-w-101,9,Phrases,Мне ... го́да / лет.,Имам ... година.,I'm ... years old.,"1 год, 2–4 го́да, 5+ лет"
+ru-a1-w-102,9,Phrases,Ско́лько сто́ит?,Колико кошта?,How much does it cost?,
+ru-a1-w-103,10,Possessives,мой / моя́ / моё / мои́,мој / моја / моје / моји,my,
+ru-a1-w-104,10,Possessives,твой / твоя́ / твоё / твои́,твој / твоја / твоје / твоји,your (informal),
+ru-a1-w-105,10,Family,оте́ц,отац,father,gen. отца́
+ru-a1-w-106,10,Family,па́па,тата,dad,
+ru-a1-w-107,10,Family,мать,мајка,mother,
+ru-a1-w-108,10,Family,ма́ма,мама,mom,
+ru-a1-w-109,10,Family,сестра́,сестра,sister,у сестры́
+ru-a1-w-110,10,Family,роди́тели,родитељи,parents,
+ru-a1-w-111,10,Family,де́вушка,дјевојка,girlfriend,
+ru-a1-w-112,10,Family,семья́,породица,family,false friend
+ru-a1-w-113,10,Family,фами́лия,презиме,surname,false friend
+ru-a1-w-114,10,Nouns,и́мя,име,name,neut.
+ru-a1-w-115,11,Verbs,хоте́ть,хтјети,to want,"irregular: хочу́, хо́чет, хотя́т"
+ru-a1-w-116,11,Verbs,спать,спавати,to sleep,
+ru-a1-w-117,11,Verbs,учи́ть,учити,to learn / study,
+ru-a1-w-118,12,Days,понеде́льник,понедјељак,Monday,lowercase
+ru-a1-w-119,12,Days,вто́рник,уторак,Tuesday,
+ru-a1-w-120,12,Days,среда́,сриједа,Wednesday,в сре́ду
+ru-a1-w-121,12,Days,четве́рг,четвртак,Thursday,
+ru-a1-w-122,12,Days,пя́тница,петак,Friday,в пя́тницу
+ru-a1-w-123,12,Days,суббо́та,субота,Saturday,double бб
+ru-a1-w-124,12,Days,воскресе́нье,недјеља,Sunday,
+ru-a1-w-125,12,Time,неде́ля,седмица / недјеља,week,false friend
+ru-a1-w-126,12,Time,день,дан,day,
+ru-a1-w-127,12,Time,сего́дня,данас,today,г is silent
+ru-a1-w-128,12,Time,за́втра,сутра,tomorrow,
+ru-a1-w-129,12,Time,уже́,већ,already,
+ru-a1-w-130,12,Phrases,Како́й сего́дня день?,Који је данас дан?,What day is it today?,
+ru-a1-w-131,13,Café,Мо́жно ...?,Може ...?,Can I have ...?,+ accusative
+ru-a1-w-132,13,Café,"Да́йте, пожа́луйста, ...","Дајте, молим вас, ...",Please give me ...,
+ru-a1-w-133,13,Café,пожа́луйста,молим / изволите,please / you're welcome,
+ru-a1-w-134,13,Café,"Счёт, пожа́луйста.","Рачун, молим.","The bill, please.",
+ru-a1-w-135,13,Café,Ско́лько с меня́?,Колико вам дугујем?,How much do I owe?,
+ru-a1-w-136,13,Café,Я бу́ду ...,Ја ћу ...,I'll have ...,
+ru-a1-w-137,13,Café,Что́-нибудь ещё?,Још нешто?,Anything else?,
+ru-a1-w-138,13,Food,чай,чај,tea,
+ru-a1-w-139,13,Food,сок,сок,juice,
+ru-a1-w-140,13,Food,пи́во,пиво,beer,
+ru-a1-w-141,13,Food,хлеб,хљеб,bread,
+ru-a1-w-142,13,Food,суп,супа,soup,
+ru-a1-w-143,13,Food,сала́т,салата,salad,"masc., no change in acc."
+ru-a1-w-144,13,Food,мя́со,месо,meat,
+ru-a1-w-145,13,Food,ры́ба,риба,fish,acc. ры́бу
+ru-a1-w-146,13,Basics,и,и,and,
+ru-a1-w-147,14,Time,Кото́рый час?,Колико је сати?,What time is it?,"ы, not и"
+ru-a1-w-148,14,Time,Ско́лько вре́мени?,Колико је сати?,What time is it?,
+ru-a1-w-149,14,Time,час / часа́ / часо́в,сат / сата / сати,hour (1 / 2–4 / 5+),
+ru-a1-w-150,14,Time,мину́та,минут,minute,"2 мину́ты, 5 мину́т"
+ru-a1-w-151,14,Time,сейча́с,сада,now,
+ru-a1-w-152,14,Time,у́тром,ујутру,in the morning,
+ru-a1-w-153,14,Time,днём,дању / поподне,in the afternoon,
+ru-a1-w-154,14,Time,ве́чером,увече,in the evening,в семь часо́в ве́чера
+ru-a1-w-155,14,Time,но́чью,ноћу,at night,
+ru-a1-w-156,14,Time,Во ско́лько?,У колико сати?,At what time?,"во, not в"
+ru-a1-w-157,14,Verbs,есть,јести,to eat,"irregular: ем, ешь, ест"
+ru-a1-w-158,14,Verbs,е́хать,ићи (возилом),to go (by vehicle),ты е́дешь
+ru-a1-w-159,15,Adjectives,но́вый,нов,new,"‑ый, not ‑ий"
+ru-a1-w-160,15,Adjectives,ста́рый,стар,old,
+ru-a1-w-161,15,Adjectives,большо́й,велик,big,
+ru-a1-w-162,15,Adjectives,ма́ленький,мали,small,
+ru-a1-w-163,15,Adjectives,хоро́ший,добар,good,
+ru-a1-w-164,15,Adjectives,плохо́й,лош,bad,
+ru-a1-w-165,15,Adjectives,краси́вый,лијеп,beautiful,"‑ый, not ‑ий"
+ru-a1-w-166,15,Adjectives,интере́сный,занимљив,interesting,
+ru-a1-w-167,15,Adjectives,ру́сский,руски,Russian,
+ru-a1-w-168,15,Adjectives,чёрный,црн,black,
+ru-a1-w-169,15,Nouns,го́род,град,city,

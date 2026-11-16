@@ -5,6 +5,7 @@ import { localDay, plainText } from '@rusky/core';
 import { languages } from '../content/files';
 import { levelOverview } from '../content/overview';
 import {
+  addGapDrills,
   addGrammarCards,
   addWords,
   ContentProblem,
@@ -49,7 +50,10 @@ const wordFields = {
     .string()
     .min(1)
     .describe('The word or phrase in the language being learned, with stress marks'),
-  native: z.string().min(1).describe('The Serbian side, in Latin script'),
+  native: z
+    .string()
+    .min(1)
+    .describe('The Serbian side, in Cyrillic script and ijekavian (вријеме, not време)'),
   english: z.string().optional().describe('A short English gloss'),
   category: z.string().optional().describe('Greetings, Nouns, Verbs, Numbers, Time, Phrases…'),
   note: z
@@ -72,6 +76,32 @@ const cardFields = {
   answer: z.string().min(1).describe('The answer side: "зна́ешь"'),
   answerSide: side,
   note: z.string().optional().describe('The rule, shown after flipping'),
+};
+
+const gapFields = {
+  label: z
+    .string()
+    .min(1)
+    .describe(
+      'What is drilled, shown above the sentence: "PRESENT TENSE", "PAST TENSE", "ACCUSATIVE"',
+    ),
+  sentence: z
+    .string()
+    .min(1)
+    .describe(
+      'The whole Russian sentence with stress marks, the part to type in square brackets: "Я [чита́ю] кни́гу." Exactly one gap of one to three words. Other answers that are just as right go in the same brackets after "|".',
+    ),
+  hint: z
+    .string()
+    .optional()
+    .describe(
+      'Shown in the gap: the form to change ("чита́ть", "но́вый", "моя́ сестра́") or a short cue ("past"). Leave it out when the sentence alone decides the answer.',
+    ),
+  translation: z
+    .string()
+    .min(1)
+    .describe('The whole sentence in Serbian, Cyrillic ijekavian, so meaning and tense are clear'),
+  note: z.string().optional().describe('The rule, shown after answering: "Group 1: я → ‑ю"'),
 };
 
 function scopeFor(userId: string, language?: string, level?: string): Scope {
@@ -225,7 +255,8 @@ export function registerCardTools(server: McpServer, userId: string) {
     'get_grammar_topic',
     {
       title: 'Grammar topic',
-      description: 'One grammar topic: its notes as Markdown, and its drill cards with their ids.',
+      description:
+        'One grammar topic: its notes as Markdown, and its drill cards with their ids (mode "flip" for flip cards, "gap" for fill-the-gap drills).',
       inputSchema: {
         ...levelArgs,
         topic: z.string().describe('The topic number ("5") or its slug ("present-tense")'),
@@ -287,11 +318,29 @@ export function registerCardTools(server: McpServer, userId: string) {
   );
 
   server.registerTool(
+    'add_gap_drills',
+    {
+      title: 'Add fill-the-gap drills',
+      description:
+        'Adds typed drills to a grammar topic: a Russian sentence with one part missing, which the learner types on their phone; the app checks it, ignoring stress marks, case and ё. Use them for verb forms in a tense, case endings, adjective endings, possessives, numbers with nouns. Write many per topic (20–40), each a short, natural, everyday sentence, using words the user already has where you can. A sentence already in the level is skipped and reported.',
+      inputSchema: {
+        ...levelArgs,
+        topic: z.number().int().positive(),
+        drills: z.array(z.object(gapFields)).min(1).max(100),
+      },
+      annotations: writes,
+    },
+    safely(({ language, level, topic, drills }) =>
+      addGapDrills(scopeFor(userId, language, level), topic, drills),
+    ),
+  );
+
+  server.registerTool(
     'update_grammar_card',
     {
       title: 'Correct a grammar card',
       description:
-        'Changes a grammar card in place; its id and progress stay. Pass only the fields that change.',
+        'Changes a grammar card or gap drill in place; its id and progress stay. Pass only the fields that change. For a gap drill (mode "gap") the prompt is the sentence with its [gap]; the answer follows from it.',
       inputSchema: {
         ...levelArgs,
         id: z.string(),
@@ -301,6 +350,8 @@ export function registerCardTools(server: McpServer, userId: string) {
         answer: cardFields.answer.optional(),
         answerSide: side.optional(),
         note: z.string().optional(),
+        hint: gapFields.hint,
+        translation: gapFields.translation.optional(),
       },
       annotations: writes,
     },

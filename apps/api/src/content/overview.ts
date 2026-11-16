@@ -79,6 +79,7 @@ export function levelOverview(s: Scope, today: string) {
       title: t.title,
       summary: t.summary,
       cards: src.grammarCards.filter((c) => c.topic === t.number).length,
+      gapDrills: src.grammarCards.filter((c) => c.topic === t.number && c.mode === 'gap').length,
     })),
     totals: { words: src.words.length, grammarCards: src.grammarCards.length },
     progress: {

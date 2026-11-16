@@ -5,4 +5,5 @@ export * from './dates';
 export * from './leitner';
 export * from './queue';
 export * from './content';
+export * from './gap';
 export * from './oauth';

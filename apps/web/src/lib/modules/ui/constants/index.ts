@@ -1,10 +1,10 @@
 import { Layers, List, SlidersHorizontal, Table2 } from '@lucide/svelte';
 
 /** Routes that show the bottom tab bar; practice and forms take the whole screen. */
-export const TAB_ROUTES = ['/', '/words', '/grammar', '/grammar/[slug]'];
+export const TAB_ROUTES = ['/', '/words', '/grammar', '/grammar/[slug]', '/profile'];
 
 /** Routes that show the sidebar on a wide screen, where it replaces the tab bar. */
-export const SIDEBAR_ROUTES = [...TAB_ROUTES, '/setup', '/profile', '/profile/password'];
+export const SIDEBAR_ROUTES = [...TAB_ROUTES, '/setup', '/profile/password'];
 
 /** Routes without the sidebar that still widen their column on a wide screen. */
 export const FOCUS_ROUTES = ['/practice'];
@@ -22,6 +22,13 @@ export const NAV_TABS = [
     match: (p: string) => p.startsWith('/grammar'),
   },
 ];
+
+/** The last tab on the phone, shown as the user's initial; the sidebar keeps it at the bottom. */
+export const PROFILE_TAB = {
+  href: '/profile',
+  label: 'Profile',
+  match: (p: string) => p.startsWith('/profile'),
+};
 
 export const SIDEBAR_LINKS = [
   ...NAV_TABS,

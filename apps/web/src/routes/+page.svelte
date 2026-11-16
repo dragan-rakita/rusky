@@ -1,7 +1,6 @@
 <script lang="ts">
   import { ChevronDown, ChevronRight, SlidersHorizontal } from '@lucide/svelte';
   import { localDay, MAX_BOX, planReview } from '@rusky/core';
-  import { auth } from '$lib/modules/auth/auth.svelte';
   import { content } from '$lib/modules/content/content.svelte';
   import { BOX_LABELS } from '$lib/modules/progress/constants';
   import { progress } from '$lib/modules/progress/progress.svelte';
@@ -72,22 +71,13 @@
     </span>
     <ChevronDown size={16} strokeWidth={2.2} aria-hidden="true" />
   </button>
-  <div class="flex items-center gap-2">
-    <a
-      href="/setup"
-      aria-label="New session"
-      class="flex size-11 items-center justify-center rounded-xl border border-edge bg-card text-ink"
-    >
-      <SlidersHorizontal size={20} strokeWidth={2} aria-hidden="true" />
-    </a>
-    <a
-      href="/profile"
-      aria-label="Profile"
-      class="flex size-11 items-center justify-center rounded-full bg-btn text-[17px] font-bold text-btn-fg"
-    >
-      {auth.initial}
-    </a>
-  </div>
+  <a
+    href="/setup"
+    aria-label="New session"
+    class="flex size-11 items-center justify-center rounded-xl border border-edge bg-card text-ink"
+  >
+    <SlidersHorizontal size={20} strokeWidth={2} aria-hidden="true" />
+  </a>
 </div>
 
 {#snippet newestLesson(display: string)}

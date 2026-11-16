@@ -1,4 +1,4 @@
-import type { Grade } from '@rusky/core';
+import type { GapResult, Grade } from '@rusky/core';
 
 /** Card text size by visible length, as a share of the card's width (cqw). */
 export const CARD_TEXT_STEPS = [
@@ -6,7 +6,8 @@ export const CARD_TEXT_STEPS = [
   { max: 13, cqw: 10.3 },
   { max: 19, cqw: 8.6 },
   { max: 26, cqw: 7.1 },
-  { max: Infinity, cqw: 6 },
+  { max: 40, cqw: 6 },
+  { max: Infinity, cqw: 5 },
 ] as const;
 
 export const GRADES: { grade: Grade; label: string; key: string }[] = [
@@ -15,6 +16,13 @@ export const GRADES: { grade: Grade; label: string; key: string }[] = [
   { grade: 'knew', label: 'Knew it', key: '3' },
   { grade: 'done', label: 'Done', key: '4' },
 ];
+
+/** What a checked gap answer says beside it; the matching grade button is ringed. */
+export const GAP_VERDICT: Record<GapResult, string> = {
+  right: 'Right',
+  close: 'One letter off',
+  wrong: 'Not quite',
+};
 
 export const DECKS: { value: PracticeDeck; label: string }[] = [
   { value: 'words', label: 'Words' },

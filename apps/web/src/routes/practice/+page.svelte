@@ -1,11 +1,23 @@
 <script lang="ts">
-  import { untrack } from 'svelte';
+  import { tick, untrack } from 'svelte';
   import { X } from '@lucide/svelte';
-  import { localDay, newCardState, shuffle, type Card, type Grade } from '@rusky/core';
+  import {
+    checkGap,
+    fillGap,
+    GAP_GRADE,
+    localDay,
+    newCardState,
+    parseGap,
+    shuffle,
+    type Card,
+    type GapResult,
+    type Grade,
+  } from '@rusky/core';
   import { page } from '$app/state';
   import { content } from '$lib/modules/content/content.svelte';
   import FlashCard from '$lib/modules/practice/components/flash-card.svelte';
-  import { GRADES, SNAP_BACK_MS } from '$lib/modules/practice/constants';
+  import GapCard from '$lib/modules/practice/components/gap-card.svelte';
+  import { GAP_VERDICT, GRADES, SNAP_BACK_MS } from '$lib/modules/practice/constants';
   import { describeCard, frontSideFor, gradeHint } from '$lib/modules/practice/faces';
   import { buildSession, parseSessionParams } from '$lib/modules/practice/session';
   import { newId, progress } from '$lib/modules/progress/progress.svelte';
@@ -23,6 +35,9 @@
   let instant = $state(false);
   let results = $state<Record<Grade, number>>({ again: 0, almost: 0, knew: 0, done: 0 });
   let missed = $state.raw<Card[]>([]);
+  let typed = $state('');
+  let gapResult = $state<GapResult | null>(null);
+  let gapInput = $state<HTMLInputElement>();
 
   $effect(() => {
     if (!progress.ready || stack) return;
@@ -42,9 +57,9 @@
   const done = $derived(!!stack && total > 0 && index >= total);
   const isWords = $derived(params.mode === 'review' || params.deck === 'words');
   const front = $derived(card ? frontSideFor(card, firstSide, index) : 'target');
-  const view = $derived(
-    card ? describeCard(card, front, content.language, content.level, content) : null,
-  );
+  const view = $derived(card ? describeCard(card, front, content.language, content.level) : null);
+  const gapCard = $derived(card?.kind === 'grammar' && card.mode === 'gap' ? card : null);
+  const suggested = $derived(gapResult ? GAP_GRADE[gapResult] : null);
   const cardState = $derived(
     card ? (progress.states.get(card.id) ?? newCardState()) : newCardState(),
   );
@@ -62,8 +77,19 @@
   function snapTo(next: number) {
     instant = true;
     flipped = false;
+    typed = '';
+    gapResult = null;
     index = next;
     setTimeout(() => (instant = false), SNAP_BACK_MS);
+    void tick().then(() => gapInput?.focus());
+  }
+
+  function checkTyped(e?: SubmitEvent) {
+    e?.preventDefault();
+    if (!gapCard || gapResult || !typed.trim()) return;
+    gapResult = checkGap(typed, parseGap(gapCard.prompt)?.answers ?? [gapCard.answer]);
+    flipped = true;
+    gapInput?.blur();
   }
 
   function grade(g: Grade) {
@@ -101,7 +127,13 @@
     if (!card || done) return;
     const target = e.target as HTMLElement;
     if (target.closest('input, textarea, select')) return;
-    if ((e.key === ' ' || e.key === 'Enter') && !target.closest('button, a')) {
+    if (gapCard) {
+      if (e.key === 'Enter' && suggested && !target.closest('button, a')) {
+        e.preventDefault();
+        grade(suggested);
+        return;
+      }
+    } else if ((e.key === ' ' || e.key === 'Enter') && !target.closest('button, a')) {
       e.preventDefault();
       flipped = !flipped;
       return;
@@ -152,11 +184,79 @@
         <h1 class="text-2xl font-bold">Nothing to practise here</h1>
         <p class="mt-2 text-[15px] text-muted">Pick other lessons or come back tomorrow.</p>
       </div>
+    {:else if gapCard && view}
+      <GapCard card={gapCard} lang={content.language.code} result={gapResult} />
+
+      <div class="mt-10 h-48 w-full max-w-[440px] overflow-y-auto lg:max-w-[560px]">
+        {#if gapCard.translation}
+          <p
+            lang={content.language.native}
+            class="text-center text-[17px] leading-snug text-native"
+          >
+            {gapCard.translation}
+          </p>
+        {/if}
+        {#if !gapResult}
+          <form id="gap-form" onsubmit={checkTyped} class="mt-4">
+            <input
+              bind:this={gapInput}
+              bind:value={typed}
+              lang={content.language.code}
+              aria-label="The missing part"
+              placeholder="Type the missing part"
+              autocomplete="off"
+              autocapitalize="none"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="done"
+              class="h-14 w-full rounded-[14px] border-[1.5px] border-strong bg-card px-4 text-center text-[20px] font-semibold text-ink placeholder:text-base placeholder:font-normal placeholder:text-muted focus:border-ink focus:outline-none"
+            />
+          </form>
+        {:else}
+          {@const verdict = GAP_VERDICT[gapResult]}
+          <div class="mt-4 flex flex-col gap-2.5 rounded-xl border border-line bg-card px-4 py-3.5">
+            <div class="flex items-baseline gap-3">
+              <span class={[MONO_LABEL, 'w-11 shrink-0 text-muted']}>YOU</span>
+              <span
+                lang={content.language.code}
+                class={[
+                  'text-[15px] leading-snug font-semibold',
+                  gapResult === 'wrong' && 'text-target line-through',
+                ]}
+              >
+                {typed.trim()}
+              </span>
+              <span class="ml-auto text-[13px] font-semibold text-muted">{verdict}</span>
+            </div>
+            {#if gapResult !== 'right'}
+              <div class="flex items-baseline gap-3">
+                <span class={[MONO_LABEL, 'w-11 shrink-0 text-muted']}>ANSWER</span>
+                <span lang={content.language.code} class="text-[15px] leading-snug font-semibold">
+                  <Stressed
+                    text={parseGap(gapCard.prompt)?.answers.join(' / ') ?? gapCard.answer}
+                  />
+                </span>
+              </div>
+            {/if}
+            {#each view.details as d (d.key)}
+              <div class="flex items-baseline gap-3">
+                <span class={[MONO_LABEL, 'w-11 shrink-0 text-muted']}>{d.key}</span>
+                {#if d.href}
+                  <a href={d.href} class="text-[15px] leading-snug text-native underline"
+                    >{d.value}</a
+                  >
+                {:else}
+                  <span class="text-[15px] leading-snug">{d.value}</span>
+                {/if}
+              </div>
+            {/each}
+          </div>
+        {/if}
+      </div>
     {:else if card && view}
       <FlashCard
         front={view.front}
         back={view.back}
-        meta={view.meta}
         {flipped}
         {instant}
         onflip={() => (flipped = !flipped)}
@@ -239,7 +339,13 @@
                   />
                 </span>
                 <span class="text-right text-[15px] text-muted">
-                  {m.kind === 'word' ? m.native : m.prompt}
+                  {#if m.kind === 'word'}
+                    {m.native}
+                  {:else if m.mode === 'gap'}
+                    <Stressed text={fillGap(m.prompt)} stress={false} />
+                  {:else}
+                    {m.prompt}
+                  {/if}
                 </span>
               </div>
             {/each}
@@ -250,7 +356,16 @@
   </div>
 
   <div class="px-5 pt-3 pb-[max(1.75rem,var(--safe-bottom))] lg:mb-auto">
-    {#if card && !flipped}
+    {#if gapCard && !gapResult}
+      <button
+        type="submit"
+        form="gap-form"
+        disabled={!typed.trim()}
+        class="h-14 w-full rounded-[14px] bg-btn text-[17px] font-semibold text-btn-fg disabled:opacity-50"
+      >
+        Check
+      </button>
+    {:else if card && !flipped}
       <button
         type="button"
         onclick={() => (flipped = true)}
@@ -277,6 +392,7 @@
               g.grade === 'almost' && 'border-[1.5px] border-strong bg-card text-ink',
               g.grade === 'knew' && 'bg-btn text-btn-fg',
               g.grade === 'done' && 'border-[1.5px] border-dashed border-strong bg-card text-ink',
+              g.grade === suggested && 'ring-2 ring-native ring-offset-2 ring-offset-bg',
             ]}
           >
             <kbd

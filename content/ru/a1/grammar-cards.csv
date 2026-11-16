@@ -1,16 +1,16 @@
 id,topic,label,prompt,prompt_side,answer,answer_side,note
-ru-a1-g-01-01,1,SAY IT,хорошо́,target,harašó,native,Unstressed о sounds like a
-ru-a1-g-01-02,1,SAY IT,спаси́бо,target,spasíba,native,Unstressed о sounds like a
-ru-a1-g-01-03,1,SAY IT,Здра́вствуйте!,target,zdrástvujte,native,The first в is silent
-ru-a1-g-01-04,1,SAY IT,сего́дня,target,sivódnja,native,г is silent
-ru-a1-g-02-01,2,SAY IT IN RUSSIAN,Ja sam student.,native,Я студе́нт.,target,"No ""to be"" in the present: the verb is left out"
-ru-a1-g-02-02,2,SAY IT IN RUSSIAN,Moskva je veliki grad.,native,Москва́ — большо́й го́род.,target,"In writing, a dash replaces je"
-ru-a1-g-03-01,3,GENDER,дом,target,muški rod,native,Ends in a consonant
-ru-a1-g-03-02,3,GENDER,кни́га,target,ženski rod,native,Ends in ‑а
-ru-a1-g-03-03,3,GENDER,окно́,target,srednji rod,native,Ends in ‑о
-ru-a1-g-03-04,3,GENDER,семья́,target,ženski rod,native,Ends in ‑я
-ru-a1-g-03-05,3,GENDER,мо́ре,target,srednji rod,native,Ends in ‑е
-ru-a1-g-03-06,3,GENDER,ко́фе,target,muški rod,native,"Exception: masculine, and it never changes form"
+ru-a1-g-01-01,1,SAY IT,хорошо́,target,харашо́,native,Unstressed о sounds like a
+ru-a1-g-01-02,1,SAY IT,спаси́бо,target,спаси́ба,native,Unstressed о sounds like a
+ru-a1-g-01-03,1,SAY IT,Здра́вствуйте!,target,здра́ствујте,native,The first в is silent
+ru-a1-g-01-04,1,SAY IT,сего́дня,target,сиво́дња,native,г is silent
+ru-a1-g-02-01,2,SAY IT IN RUSSIAN,Ја сам студент.,native,Я студе́нт.,target,"No ""to be"" in the present: the verb is left out"
+ru-a1-g-02-02,2,SAY IT IN RUSSIAN,Москва је велики град.,native,Москва́ — большо́й го́род.,target,"In writing, a dash replaces је"
+ru-a1-g-03-01,3,GENDER,дом,target,мушки род,native,Ends in a consonant
+ru-a1-g-03-02,3,GENDER,кни́га,target,женски род,native,Ends in ‑а
+ru-a1-g-03-03,3,GENDER,окно́,target,средњи род,native,Ends in ‑о
+ru-a1-g-03-04,3,GENDER,семья́,target,женски род,native,Ends in ‑я
+ru-a1-g-03-05,3,GENDER,мо́ре,target,средњи род,native,Ends in ‑е
+ru-a1-g-03-06,3,GENDER,ко́фе,target,мушки род,native,"Exception: masculine, and it never changes form"
 ru-a1-g-05-01,5,PRESENT · GROUP 1,знать → я,target,зна́ю,target,"‑ю, ‑ешь, ‑ет, ‑ем, ‑ете, ‑ют"
 ru-a1-g-05-02,5,PRESENT · GROUP 1,знать → ты,target,зна́ешь,target,ты always ends in ‑шь
 ru-a1-g-05-03,5,PRESENT · GROUP 1,знать → он / она́,target,зна́ет,target,"‑ю, ‑ешь, ‑ет, ‑ем, ‑ете, ‑ют"
@@ -53,15 +53,15 @@ ru-a1-g-06-09,6,PAST TENSE,жить → он,target,жил,target,"жил, жи�
 ru-a1-g-06-10,6,PAST TENSE,жить → она́,target,жила́,target,"жил, жила́, жи́ло, жи́ли"
 ru-a1-g-06-11,6,PAST TENSE,жить → оно́,target,жи́ло,target,"жил, жила́, жи́ло, жи́ли"
 ru-a1-g-06-12,6,PAST TENSE,жить → они́,target,жи́ли,target,"жил, жила́, жи́ло, жи́ли"
-ru-a1-g-07-01,7,I HAVE,Imam …,native,У меня́ есть …,target,у + genitive + есть + nominative
-ru-a1-g-07-02,7,I HAVE,Imaš …,native,У тебя́ есть …,target,у + genitive + есть + nominative
-ru-a1-g-07-03,7,I HAVE,Ima (on) …,native,У него́ есть …,target,у + genitive + есть + nominative
-ru-a1-g-07-04,7,I HAVE,Ima (ona) …,native,У неё есть …,target,у + genitive + есть + nominative
-ru-a1-g-07-05,7,I HAVE,Imamo …,native,У нас есть …,target,у + genitive + есть + nominative
-ru-a1-g-07-06,7,I HAVE,Imate …,native,У вас есть …,target,у + genitive + есть + nominative
-ru-a1-g-07-07,7,I HAVE,Imaju …,native,У них есть …,target,у + genitive + есть + nominative
-ru-a1-g-07-08,7,I DON'T HAVE,Nemam vremena.,native,У меня́ нет вре́мени.,target,нет + genitive
-ru-a1-g-07-09,7,GENITIVE AFTER у,мой брат → у …,target,у моего́ бра́та,target,"Like Serbian kod mog brata"
+ru-a1-g-07-01,7,I HAVE,Имам …,native,У меня́ есть …,target,у + genitive + есть + nominative
+ru-a1-g-07-02,7,I HAVE,Имаш …,native,У тебя́ есть …,target,у + genitive + есть + nominative
+ru-a1-g-07-03,7,I HAVE,Има (он) …,native,У него́ есть …,target,у + genitive + есть + nominative
+ru-a1-g-07-04,7,I HAVE,Има (она) …,native,У неё есть …,target,у + genitive + есть + nominative
+ru-a1-g-07-05,7,I HAVE,Имамо …,native,У нас есть …,target,у + genitive + есть + nominative
+ru-a1-g-07-06,7,I HAVE,Имате …,native,У вас есть …,target,у + genitive + есть + nominative
+ru-a1-g-07-07,7,I HAVE,Имају …,native,У них есть …,target,у + genitive + есть + nominative
+ru-a1-g-07-08,7,I DON'T HAVE,Немам времена.,native,У меня́ нет вре́мени.,target,нет + genitive
+ru-a1-g-07-09,7,GENITIVE AFTER у,мой брат → у …,target,у моего́ бра́та,target,"Like Serbian код мог брата"
 ru-a1-g-07-10,7,GENITIVE AFTER у,мой оте́ц → у …,target,у моего́ отца́,target,е drops out: оте́ц → отца́
 ru-a1-g-07-11,7,GENITIVE AFTER у,моя́ сестра́ → у …,target,у мое́й сестры́,target,"Not у моего отец: genitive after у"
 ru-a1-g-08-01,8,PREPOSITIONAL · WHERE?,в + дом,target,в до́ме,target,Consonant: + е
@@ -75,14 +75,14 @@ ru-a1-g-08-08,8,ACCUSATIVE,Мы смо́трим … (фильм),target,Мы с
 ru-a1-g-08-09,8,ACCUSATIVE,Она́ лю́бит … (брат),target,Она́ лю́бит бра́та.,target,"Masculine person or animal: + а"
 ru-a1-g-08-10,8,ACCUSATIVE,Я люблю́ … (мо́ре),target,Я люблю́ мо́ре.,target,"Neuter: no change"
 ru-a1-g-08-11,8,ACCUSATIVE,Я хочу́ … (ко́фе),target,Я хочу́ ко́фе.,target,ко́фе never changes
-ru-a1-g-09-01,9,POSSESSIVE,moj brat,native,мой брат,target,"Masculine: мой, твой"
-ru-a1-g-09-02,9,POSSESSIVE,moja sestra,native,моя́ сестра́,target,"Feminine: моя́, твоя́"
-ru-a1-g-09-03,9,POSSESSIVE,moj prozor,native,моё окно́,target,"окно́ is neuter in Russian: моё, твоё"
-ru-a1-g-09-04,9,POSSESSIVE,moji roditelji,native,мои́ роди́тели,target,"Plural: мои́, твои́"
-ru-a1-g-09-05,9,POSSESSIVE,tvoj telefon,native,твой телефо́н,target,"Masculine: мой, твой"
-ru-a1-g-09-06,9,POSSESSIVE,tvoja knjiga,native,твоя́ кни́га,target,"Feminine: моя́, твоя́"
-ru-a1-g-09-07,9,POSSESSIVE,tvoje more,native,твоё мо́ре,target,"Neuter: моё, твоё"
-ru-a1-g-09-08,9,POSSESSIVE,tvoji roditelji,native,твои́ роди́тели,target,"Plural: мои́, твои́"
+ru-a1-g-09-01,9,POSSESSIVE,мој брат,native,мой брат,target,"Masculine: мой, твой"
+ru-a1-g-09-02,9,POSSESSIVE,моја сестра,native,моя́ сестра́,target,"Feminine: моя́, твоя́"
+ru-a1-g-09-03,9,POSSESSIVE,мој прозор,native,моё окно́,target,"окно́ is neuter in Russian: моё, твоё"
+ru-a1-g-09-04,9,POSSESSIVE,моји родитељи,native,мои́ роди́тели,target,"Plural: мои́, твои́"
+ru-a1-g-09-05,9,POSSESSIVE,твој телефон,native,твой телефо́н,target,"Masculine: мой, твой"
+ru-a1-g-09-06,9,POSSESSIVE,твоја књига,native,твоя́ кни́га,target,"Feminine: моя́, твоя́"
+ru-a1-g-09-07,9,POSSESSIVE,твоје море,native,твоё мо́ре,target,"Neuter: моё, твоё"
+ru-a1-g-09-08,9,POSSESSIVE,твоји родитељи,native,твои́ роди́тели,target,"Plural: мои́, твои́"
 ru-a1-g-10-01,10,ADJECTIVE,но́вый + маши́на,target,но́вая маши́на,target,Feminine: ‑ая / ‑яя
 ru-a1-g-10-02,10,ADJECTIVE,но́вый + окно́,target,но́вое окно́,target,Neuter: ‑ое / ‑ее
 ru-a1-g-10-03,10,ADJECTIVE,но́вый + кни́ги,target,но́вые кни́ги,target,Plural: ‑ые / ‑ие
@@ -91,20 +91,20 @@ ru-a1-g-10-05,10,ADJECTIVE,ру́сский + фильм,target,ру́сский
 ru-a1-g-10-06,10,ADJECTIVE,большо́й + го́род,target,большо́й го́род,target,Masculine ‑ой when the ending is stressed
 ru-a1-g-11-01,11,NUMBER + NOUN,2 + год,target,два го́да,target,1 год · 2–4 го́да · 5+ лет
 ru-a1-g-11-02,11,NUMBER + NOUN,5 + год,target,пять лет,target,1 год · 2–4 го́да · 5+ лет
-ru-a1-g-11-03,11,NUMBER + NOUN,Imam 32 godine.,native,Мне три́дцать два го́да.,target,1 год · 2–4 го́да · 5+ лет
+ru-a1-g-11-03,11,NUMBER + NOUN,Имам 32 године.,native,Мне три́дцать два го́да.,target,1 год · 2–4 го́да · 5+ лет
 ru-a1-g-11-04,11,NUMBER + NOUN,4 + час,target,четы́ре часа́,target,1 час · 2–4 часа́ · 5+ часо́в
 ru-a1-g-11-05,11,NUMBER + NOUN,5 + час,target,пять часо́в,target,1 час · 2–4 часа́ · 5+ часо́в
 ru-a1-g-11-06,11,NUMBER + NOUN,3 + мину́та,target,три мину́ты,target,1 мину́та · 2–4 мину́ты · 5+ мину́т
-ru-a1-g-11-07,11,NUMBER + NOUN,Sada je 5:20.,native,Сейча́с пять часо́в два́дцать мину́т.,target,5–20 take the 5+ form
-ru-a1-g-11-08,11,NUMBERS,57,native,пятьдеся́т семь,target,"Compounds have no ""i"""
-ru-a1-g-12-01,12,ON A DAY,u ponedeljak,native,в понеде́льник,target,в + accusative
-ru-a1-g-12-02,12,ON A DAY,u sredu,native,в сре́ду,target,в + accusative: ‑а → у
-ru-a1-g-12-03,12,ON A DAY,u petak,native,в пя́тницу,target,в + accusative: ‑а → у
-ru-a1-g-12-04,12,ON A DAY,u subotu,native,в суббо́ту,target,в + accusative: ‑а → у
-ru-a1-g-12-05,12,ON A DAY,u nedelju,native,в воскресе́нье,target,"Not воскресение, which means resurrection"
-ru-a1-g-12-06,12,TIME,u sedam uveče,native,в семь часо́в ве́чера,target,"у́тром, днём, ве́чером, но́чью"
-ru-a1-g-12-07,12,TIME,U koliko sati?,native,Во ско́лько?,target,"во, not в"
-ru-a1-g-14-01,14,FIX THE MISTAKE,ето,target,э́то,target,"е = ""je"", so write э"
+ru-a1-g-11-07,11,NUMBER + NOUN,Сада је 5:20.,native,Сейча́с пять часо́в два́дцать мину́т.,target,5–20 take the 5+ form
+ru-a1-g-11-08,11,NUMBERS,57,native,пятьдеся́т семь,target,"Compounds have no ""и"""
+ru-a1-g-12-01,12,ON A DAY,у понедјељак,native,в понеде́льник,target,в + accusative
+ru-a1-g-12-02,12,ON A DAY,у сриједу,native,в сре́ду,target,в + accusative: ‑а → у
+ru-a1-g-12-03,12,ON A DAY,у петак,native,в пя́тницу,target,в + accusative: ‑а → у
+ru-a1-g-12-04,12,ON A DAY,у суботу,native,в суббо́ту,target,в + accusative: ‑а → у
+ru-a1-g-12-05,12,ON A DAY,у недјељу,native,в воскресе́нье,target,"Not воскресение, which means resurrection"
+ru-a1-g-12-06,12,TIME,у седам увече,native,в семь часо́в ве́чера,target,"у́тром, днём, ве́чером, но́чью"
+ru-a1-g-12-07,12,TIME,У колико сати?,native,Во ско́лько?,target,"во, not в"
+ru-a1-g-14-01,14,FIX THE MISTAKE,ето,target,э́то,target,"е = ""је"", so write э"
 ru-a1-g-14-02,14,FIX THE MISTAKE,ми,target,мы,target,ы is a separate letter
 ru-a1-g-14-03,14,FIX THE MISTAKE,гледать,target,смотре́ть,target,гледать is the Serbian word
 ru-a1-g-14-04,14,FIX THE MISTAKE,радит,target,рабо́тает,target,радит is the Serbian word
@@ -119,9 +119,9 @@ ru-a1-g-14-12,14,FIX THE MISTAKE,новий,target,но́вый,target,"‑ий 
 ru-a1-g-14-13,14,FIX THE MISTAKE,брать (brother),target,брат,target,брать means to take
 ru-a1-g-14-14,14,FIX THE MISTAKE,у моего отец,target,у моего́ отца́,target,Genitive after у
 ru-a1-g-14-15,14,FIX THE MISTAKE,воскресение (Sunday),target,воскресе́нье,target,воскресе́ние means resurrection
-ru-a1-g-15-01,15,FALSE FRIEND,неде́ля,target,sedmica,native,"Not nedelja: Sunday is воскресе́нье"
-ru-a1-g-15-02,15,FALSE FRIEND,фами́лия,target,prezime,native,"Not familija: family is семья́"
-ru-a1-g-15-03,15,FALSE FRIEND,живо́т,target,stomak,native,Not život
-ru-a1-g-15-04,15,FALSE FRIEND,люби́ть,target,voleti,native,Not ljubiti (to kiss)
-ru-a1-g-15-05,15,FALSE FRIEND,столи́ца,target,glavni grad,native,Not stolica
-ru-a1-g-15-06,15,FALSE FRIEND,е́хать (ты е́дешь),target,ići vozilom,native,"Not jesti: to eat is есть, ты ешь"
+ru-a1-g-15-01,15,FALSE FRIEND,неде́ля,target,седмица,native,"Not недјеља: Sunday is воскресе́нье"
+ru-a1-g-15-02,15,FALSE FRIEND,фами́лия,target,презиме,native,"Not фамилија: family is семья́"
+ru-a1-g-15-03,15,FALSE FRIEND,живо́т,target,стомак,native,Not живот
+ru-a1-g-15-04,15,FALSE FRIEND,люби́ть,target,вољети,native,Not љубити (to kiss)
+ru-a1-g-15-05,15,FALSE FRIEND,столи́ца,target,главни град,native,Not столица
+ru-a1-g-15-06,15,FALSE FRIEND,е́хать (ты е́дешь),target,ићи возилом,native,"Not јести: to eat is есть, ты ешь"

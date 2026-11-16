@@ -1,6 +1,8 @@
 import { parseCsvRecords } from './csv';
+import { parseGap } from './gap';
 import type {
   GrammarCard,
+  GrammarMode,
   GrammarTopicSource,
   LevelContent,
   LevelSources,
@@ -9,6 +11,7 @@ import type {
 } from './types';
 
 const SIDES: Side[] = ['target', 'native'];
+const MODES: GrammarMode[] = ['flip', 'gap'];
 
 export class ContentError extends Error {}
 
@@ -58,6 +61,12 @@ export function parseLevelFiles(files: LevelFiles, language: string, level: stri
     if (!SIDES.includes(promptSide) || !SIDES.includes(answerSide)) {
       fail('grammar-cards.csv', `${r.id} needs prompt_side and answer_side of target or native`);
     }
+    const mode = (r.mode || 'flip') as GrammarMode;
+    if (!MODES.includes(mode)) fail('grammar-cards.csv', `${r.id} has mode "${r.mode}"`);
+    const gap = mode === 'gap' ? parseGap(r.prompt) : null;
+    if (mode === 'gap' && !gap) {
+      fail('grammar-cards.csv', `${r.id} needs exactly one [gap] in its prompt`);
+    }
     return {
       kind: 'grammar',
       id: r.id,
@@ -65,9 +74,12 @@ export function parseLevelFiles(files: LevelFiles, language: string, level: stri
       label: r.label,
       prompt: r.prompt,
       promptSide,
-      answer: r.answer,
+      answer: r.answer || (gap?.answers[0] ?? ''),
       answerSide,
       note: r.note,
+      mode,
+      hint: r.hint ?? '',
+      translation: r.translation ?? '',
     };
   });
 
