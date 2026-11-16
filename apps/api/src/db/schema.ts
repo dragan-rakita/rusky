@@ -335,6 +335,11 @@ export const grammarCard = sqliteTable(
     answer: text('answer').notNull(),
     answerSide: text('answer_side', { enum: ['target', 'native'] }).notNull(),
     note: text('note').notNull().default(''),
+    mode: text('mode', { enum: ['flip', 'gap'] })
+      .notNull()
+      .default('flip'),
+    hint: text('hint').notNull().default(''),
+    translation: text('translation').notNull().default(''),
     createdAt: integer('created_at', { mode: 'timestamp_ms' }).default(now).notNull(),
     updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
       .default(now)

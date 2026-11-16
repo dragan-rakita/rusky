@@ -11,6 +11,7 @@ const INSTRUCTIONS = [
   'Serbian goes in Cyrillic script (ћирилица), in the ijekavian form the user speaks in Republika Srpska: вријеме, дјевојка, лијеп, видјети, гдје, не разумијем, never the ekavian време, девојка, леп or Latin script. If you find Serbian still in Latin script or ekavian, offer to fix it with update_word or update_grammar_card.',
   'English is a short gloss. A note is a short memory aid: gender, an irregular form, a false friend.',
   'Grammar: keep one topic per grammar point, notes in Markdown with tables, and add drill cards for it with add_grammar_cards. Read a topic with get_grammar_topic before replacing its notes.',
+  'Fill-the-gap drills (add_gap_drills) are where most grammar practice happens: many short example sentences per topic, each with one part to type. get_overview shows gapDrills per topic; topics with few need more.',
   'Fix a mistake with update_word or update_grammar_card, which keep the card id and its progress. Never remove anything unless the user asks; name what you will remove and wait for them to confirm.',
   'After saving, tell the user briefly what was added or changed. The app picks it up on its next sync.',
 ].join('\n');

@@ -18,16 +18,26 @@ export type WordCard = {
   note: string;
 };
 
+/** `flip`: turn the card over and grade yourself. `gap`: type the missing part of a sentence. */
+export type GrammarMode = 'flip' | 'gap';
+
 export type GrammarCard = {
   kind: 'grammar';
   id: string;
   topic: number;
   label: string;
+  /** For a gap card, the whole sentence with the part to type in brackets: `Я [чита́ю] кни́гу.` */
   prompt: string;
   promptSide: Side;
+  /** For a gap card, the first answer in the brackets. */
   answer: string;
   answerSide: Side;
   note: string;
+  mode: GrammarMode;
+  /** Gap cards: what to change, shown in the gap (`чита́ть`), or empty. */
+  hint: string;
+  /** Gap cards: the whole sentence in the native language. */
+  translation: string;
 };
 
 export type Card = WordCard | GrammarCard;

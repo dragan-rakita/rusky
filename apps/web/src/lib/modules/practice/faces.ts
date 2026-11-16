@@ -1,5 +1,6 @@
 import {
   intervalFor,
+  visibleLength,
   type Card,
   type CardState,
   type Grade,
@@ -7,6 +8,14 @@ import {
   type LevelContent,
   type Side,
 } from '@rusky/core';
+import { CARD_TEXT_STEPS } from './constants';
+
+/** Card text size as a share of the card's width (cqw): longer text, smaller type. */
+export function cardTextSize(text: string): number {
+  const n = visibleLength(text);
+  return (CARD_TEXT_STEPS.find((s) => n <= s.max) ?? CARD_TEXT_STEPS[CARD_TEXT_STEPS.length - 1])
+    .cqw;
+}
 
 export function intervalLabel(days: number): string {
   if (days === 1) return 'tomorrow';

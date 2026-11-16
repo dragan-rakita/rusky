@@ -29,6 +29,7 @@
 - **Card ids are permanent.** Progress is stored against them; changing or reusing an id loses or corrupts that card's history. New words get the next number (`ru-a1-w-170`); a corrected word keeps its id.
 - "target" is the language being learned (red, the card's Russian side), "native" the one the user speaks (blue, Serbian). Never hard-code Russian or Serbian in code; German comes later.
 - Grammar notes are Markdown, one topic each, rendered with `marked` and `decorateGrammarHtml` (stressed vowels and bold table cells in red).
+- A grammar card is a flip card (`mode: 'flip'`) or a fill-the-gap drill (`mode: 'gap'`). A gap drill's `prompt` is the Russian sentence with one part in brackets, other right answers after `|` (`Я [чита́ю] кни́гу.`); `answer` is the first of them, kept in sync by the API. `hint` shows in the gap, `translation` (Serbian) under the card. The learner types the part; `checkGap` in core ignores stress marks, case, ё and outer punctuation, calls one letter off (answers of four letters or more) close, and the practice screen rings the suggested grade (knew, almost, again). Gap drills share the topic's id sequence, boxes and decks with flip cards. Claude adds them with `add_gap_drills`, which skips a sentence already in the level.
 
 ## Claude connector (MCP)
 
@@ -36,7 +37,7 @@
 - URLs outside `/api`: `/mcp`, `/.well-known/oauth-protected-resource/mcp`, `/.well-known/oauth-authorization-server/api/auth`. nginx must pass all three to the API.
 - Registration is open only for Claude's callback (`normalizeClientRegistration`), every client gets the `/consent` screen once, tokens are opaque hashed rows, token errors are rewritten to `invalid_grant`. `/login` resumes the flow with `oauthResumeUrl`.
 - The OAuth plugin refuses to start when `session` options are set without `storeSessionInDatabase: true`.
-- One scope, `cards`. Tools: `get_overview` (lessons, topics, boxes, due, most-missed cards), `list_words`, `add_words`, `update_word`, `remove_word`, `set_lesson_title`, `get_grammar_topic`, `save_grammar_topic`, `add_grammar_cards`, `update_grammar_card`, `remove_grammar_card`. The instructions in `apps/api/src/mcp/server.ts` ask for stress marks and Serbian in Cyrillic, ijekavian (the user is from Republika Srpska).
+- One scope, `cards`. Tools: `get_overview` (lessons, topics, boxes, due, most-missed cards), `list_words`, `add_words`, `update_word`, `remove_word`, `set_lesson_title`, `get_grammar_topic`, `save_grammar_topic`, `add_grammar_cards`, `add_gap_drills`, `update_grammar_card`, `remove_grammar_card`. The instructions in `apps/api/src/mcp/server.ts` ask for stress marks and Serbian in Cyrillic, ijekavian (the user is from Republika Srpska).
 - Test against the built API (`node dist/index.js`) on a throwaway `DATABASE_URL`; `RUSKY_API` points a second web dev server at it.
 
 ## Progress and sync

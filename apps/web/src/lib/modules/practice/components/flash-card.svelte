@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { visibleLength } from '@rusky/core';
   import Stressed from '$lib/modules/ui/components/stressed.svelte';
-  import { CARD_TEXT_STEPS } from '../constants';
+  import { cardTextSize } from '../faces';
 
   let {
     front,
@@ -16,12 +15,6 @@
     instant?: boolean;
     onflip: () => void;
   } = $props();
-
-  const textSize = (text: string) => {
-    const n = visibleLength(text);
-    return (CARD_TEXT_STEPS.find((s) => n <= s.max) ?? CARD_TEXT_STEPS[CARD_TEXT_STEPS.length - 1])
-      .cqw;
-  };
 </script>
 
 <div
@@ -70,7 +63,7 @@
             'absolute inset-x-[5%] bottom-0 flex items-center justify-center text-center leading-[1.15] font-semibold tracking-[-0.01em]',
             face.label ? 'top-[23%]' : 'top-0',
           ]}
-          style:font-size="{textSize(face.text)}cqw"
+          style:font-size="{cardTextSize(face.text)}cqw"
         >
           <span><Stressed text={face.text} stress={face.side === 'target'} /></span>
         </span>

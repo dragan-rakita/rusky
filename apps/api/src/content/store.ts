@@ -2,12 +2,16 @@ import { and, asc, eq, sql } from 'drizzle-orm';
 import { marked } from 'marked';
 import {
   buildLevel,
+  fillGap,
   grammarCardId,
   idNumber,
+  normalizeAnswer,
+  parseGap,
   plainText,
   slugify,
   wordId,
   type GrammarCard,
+  type GrammarMode,
   type LevelContent,
   type LevelSources,
   type Side,
@@ -65,6 +69,9 @@ function insertSources(tx: Tx, userId: string, src: LevelSources) {
         answer: c.answer,
         answerSide: c.answerSide,
         note: c.note,
+        mode: c.mode,
+        hint: c.hint,
+        translation: c.translation,
       })
       .onConflictDoNothing()
       .run();
@@ -127,6 +134,9 @@ const toGrammarCard = (r: typeof grammarCard.$inferSelect): GrammarCard => ({
   answer: r.answer,
   answerSide: r.answerSide,
   note: r.note,
+  mode: r.mode,
+  hint: r.hint,
+  translation: r.translation,
 });
 
 export function levelSources(s: Scope): LevelSources {
@@ -345,7 +355,31 @@ export type NewGrammarCard = {
   answer: string;
   answerSide: Side;
   note?: string;
+  mode?: GrammarMode;
+  hint?: string;
+  translation?: string;
 };
+
+export type NewGapDrill = {
+  label: string;
+  sentence: string;
+  hint?: string;
+  translation: string;
+  note?: string;
+};
+
+/** A gap card's answer is the first one in its brackets; a sentence without one gap is refused. */
+function gapAnswer(sentence: string): string {
+  const gap = parseGap(sentence);
+  if (!gap) {
+    throw new ContentProblem(
+      `"${sentence}" needs exactly one part to type in square brackets, like "Я [чита́ю] кни́гу."`,
+    );
+  }
+  return gap.answers[0];
+}
+
+const gapKey = (sentence: string) => normalizeAnswer(fillGap(sentence));
 
 export function addGrammarCards(s: Scope, topic: number, cards: NewGrammarCard[]) {
   return change(s.userId, (tx) => {
@@ -361,7 +395,27 @@ export function addGrammarCards(s: Scope, topic: number, cards: NewGrammarCard[]
       .where(and(inLevel(grammarCard, s), eq(grammarCard.topic, topic)))
       .all();
     let next = Math.max(0, ...current.map((c) => idNumber(c.id))) + 1;
-    const added = cards.map((c) => {
+    const gaps = new Map(
+      tx
+        .select({ id: grammarCard.id, prompt: grammarCard.prompt })
+        .from(grammarCard)
+        .where(and(inLevel(grammarCard, s), eq(grammarCard.mode, 'gap')))
+        .all()
+        .map((c) => [gapKey(c.prompt), c.id]),
+    );
+    const added: { id: string; prompt: string; answer: string }[] = [];
+    const skipped: { prompt: string; existingId: string }[] = [];
+    for (const c of cards) {
+      const mode = c.mode ?? 'flip';
+      const prompt = c.prompt.trim();
+      const answer = mode === 'gap' ? gapAnswer(prompt) : c.answer.trim();
+      if (mode === 'gap') {
+        const existingId = gaps.get(gapKey(prompt));
+        if (existingId) {
+          skipped.push({ prompt, existingId });
+          continue;
+        }
+      }
       const id = grammarCardId(s.language, s.level, topic, next++);
       tx.insert(grammarCard)
         .values({
@@ -369,26 +423,61 @@ export function addGrammarCards(s: Scope, topic: number, cards: NewGrammarCard[]
           id,
           topic,
           label: c.label.trim().toUpperCase(),
-          prompt: c.prompt.trim(),
+          prompt,
           promptSide: c.promptSide,
-          answer: c.answer.trim(),
+          answer,
           answerSide: c.answerSide,
           note: c.note?.trim() ?? '',
+          mode,
+          hint: c.hint?.trim() ?? '',
+          translation: c.translation?.trim() ?? '',
         })
         .run();
-      return { id, prompt: c.prompt, answer: c.answer };
-    });
-    return { topic, added };
+      if (mode === 'gap') gaps.set(gapKey(prompt), id);
+      added.push({ id, prompt, answer });
+    }
+    return { topic, added, skipped };
   });
 }
 
-export function updateGrammarCard(s: Scope, id: string, patch: Partial<NewGrammarCard>) {
+export function addGapDrills(s: Scope, topic: number, drills: NewGapDrill[]) {
+  return addGrammarCards(
+    s,
+    topic,
+    drills.map((d) => ({
+      label: d.label,
+      prompt: d.sentence,
+      promptSide: 'target',
+      answer: '',
+      answerSide: 'target',
+      note: d.note,
+      mode: 'gap',
+      hint: d.hint,
+      translation: d.translation,
+    })),
+  );
+}
+
+export function updateGrammarCard(
+  s: Scope,
+  id: string,
+  patch: Partial<Omit<NewGrammarCard, 'mode'>>,
+) {
   return change(s.userId, (tx) => {
-    const set = Object.fromEntries(
+    const set: Record<string, string> = Object.fromEntries(
       Object.entries(patch)
         .filter(([, v]) => v !== undefined)
         .map(([k, v]) => [k, k === 'label' ? String(v).trim().toUpperCase() : String(v).trim()]),
     );
+    const before = tx
+      .select({ mode: grammarCard.mode })
+      .from(grammarCard)
+      .where(and(inLevel(grammarCard, s), eq(grammarCard.id, id)))
+      .get();
+    if (before?.mode === 'gap') {
+      delete set.answer;
+      if (set.prompt !== undefined) set.answer = gapAnswer(set.prompt);
+    }
     const updated = tx
       .update(grammarCard)
       .set(set)
