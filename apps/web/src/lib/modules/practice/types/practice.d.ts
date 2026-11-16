@@ -1,6 +1,6 @@
 type CardFace = {
   side: import('@rusky/core').Side;
-  label: string;
+  label?: string;
   text: string;
   lang: string;
 };

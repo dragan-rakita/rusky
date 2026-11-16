@@ -42,9 +42,7 @@
   const done = $derived(!!stack && total > 0 && index >= total);
   const isWords = $derived(params.mode === 'review' || params.deck === 'words');
   const front = $derived(card ? frontSideFor(card, firstSide, index) : 'target');
-  const view = $derived(
-    card ? describeCard(card, front, content.language, content.level, content) : null,
-  );
+  const view = $derived(card ? describeCard(card, front, content.language, content.level) : null);
   const cardState = $derived(
     card ? (progress.states.get(card.id) ?? newCardState()) : newCardState(),
   );
@@ -156,7 +154,6 @@
       <FlashCard
         front={view.front}
         back={view.back}
-        meta={view.meta}
         {flipped}
         {instant}
         onflip={() => (flipped = !flipped)}

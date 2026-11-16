@@ -8,8 +8,6 @@ import {
   type Side,
 } from '@rusky/core';
 
-type Labels = { targetCode: string; nativeCode: string };
-
 export function intervalLabel(days: number): string {
   if (days === 1) return 'tomorrow';
   if (days === 7) return 'in a week';
@@ -29,37 +27,19 @@ export function frontSideFor(card: Card, choice: FirstSideChoice, index: number)
 }
 
 /**
- * Both faces of a card, the strip above the text, and what shows under it once turned:
- * a word's note, or a grammar card's rule and topic.
+ * Both faces of a card and what shows under it once turned: a word's note, or a grammar
+ * card's rule and topic. A word is only its text; a grammar card carries its task as a label.
  */
-export function describeCard(
-  card: Card,
-  front: Side,
-  language: Language,
-  level: LevelContent,
-  labels: Labels,
-) {
+export function describeCard(card: Card, front: Side, language: Language, level: LevelContent) {
   const langTag = (side: Side) => (side === 'target' ? language.code : language.native);
-  const code = (side: Side) => (side === 'target' ? labels.targetCode : labels.nativeCode);
 
   if (card.kind === 'word') {
     const back: Side = front === 'target' ? 'native' : 'target';
     const text = (side: Side) => (side === 'target' ? card.target : card.native);
     const details: CardDetail[] = card.note ? [{ key: 'NOTE', value: card.note }] : [];
     return {
-      front: {
-        side: front,
-        label: code(front),
-        text: text(front),
-        lang: langTag(front),
-      } satisfies CardFace,
-      back: {
-        side: back,
-        label: code(back),
-        text: text(back),
-        lang: langTag(back),
-      } satisfies CardFace,
-      meta: `L${card.lesson} · ${card.category.toUpperCase()}`,
+      front: { side: front, text: text(front), lang: langTag(front) } satisfies CardFace,
+      back: { side: back, text: text(back), lang: langTag(back) } satisfies CardFace,
       details,
     };
   }
@@ -81,7 +61,6 @@ export function describeCard(
       text: card.answer,
       lang: langTag(card.answerSide),
     } satisfies CardFace,
-    meta: '',
     details,
   };
 }

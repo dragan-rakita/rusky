@@ -6,14 +6,12 @@
   let {
     front,
     back,
-    meta = '',
     flipped,
     instant = false,
     onflip,
   }: {
     front: CardFace;
     back: CardFace;
-    meta?: string;
     flipped: boolean;
     instant?: boolean;
     onflip: () => void;
@@ -50,21 +48,28 @@
         class="absolute inset-0 block overflow-hidden rounded-md border border-paper-edge bg-paper text-ink shadow-lift backface-hidden"
         style:transform={i === 1 ? 'rotateY(180deg)' : 'none'}
       >
-        <span
-          class={[
-            'absolute inset-x-0 top-[21.5%] h-0.5',
-            face.side === 'target' ? 'bg-target' : 'bg-native',
-          ]}
-        ></span>
-        <span
-          class="absolute inset-x-3.5 top-[6%] flex justify-between font-mono text-[11px] leading-4 font-semibold tracking-[0.06em]"
-        >
-          <span class={face.side === 'target' ? 'text-target' : 'text-native'}>{face.label}</span>
-          <span class="text-muted">{meta}</span>
-        </span>
+        {#if face.label}
+          <span
+            class={[
+              'absolute inset-x-0 top-[21.5%] h-0.5',
+              face.side === 'target' ? 'bg-target' : 'bg-native',
+            ]}
+          ></span>
+          <span
+            class={[
+              'absolute inset-x-3.5 top-[6%] font-mono text-[11px] leading-4 font-semibold tracking-[0.06em]',
+              face.side === 'target' ? 'text-target' : 'text-native',
+            ]}
+          >
+            {face.label}
+          </span>
+        {/if}
         <span
           lang={face.lang}
-          class="absolute inset-x-[5%] top-[23%] bottom-0 flex items-center justify-center text-center leading-[1.15] font-semibold tracking-[-0.01em]"
+          class={[
+            'absolute inset-x-[5%] bottom-0 flex items-center justify-center text-center leading-[1.15] font-semibold tracking-[-0.01em]',
+            face.label ? 'top-[23%]' : 'top-0',
+          ]}
           style:font-size="{textSize(face.text)}cqw"
         >
           <span><Stressed text={face.text} stress={face.side === 'target'} /></span>

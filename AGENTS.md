@@ -36,7 +36,7 @@
 - URLs outside `/api`: `/mcp`, `/.well-known/oauth-protected-resource/mcp`, `/.well-known/oauth-authorization-server/api/auth`. nginx must pass all three to the API.
 - Registration is open only for Claude's callback (`normalizeClientRegistration`), every client gets the `/consent` screen once, tokens are opaque hashed rows, token errors are rewritten to `invalid_grant`. `/login` resumes the flow with `oauthResumeUrl`.
 - The OAuth plugin refuses to start when `session` options are set without `storeSessionInDatabase: true`.
-- One scope, `cards`. Tools: `get_overview` (lessons, topics, boxes, due, most-missed cards), `list_words`, `add_words`, `update_word`, `remove_word`, `set_lesson_title`, `get_grammar_topic`, `save_grammar_topic`, `add_grammar_cards`, `update_grammar_card`, `remove_grammar_card`. The instructions in `apps/api/src/mcp/server.ts` ask for stress marks and Serbian in Latin script.
+- One scope, `cards`. Tools: `get_overview` (lessons, topics, boxes, due, most-missed cards), `list_words`, `add_words`, `update_word`, `remove_word`, `set_lesson_title`, `get_grammar_topic`, `save_grammar_topic`, `add_grammar_cards`, `update_grammar_card`, `remove_grammar_card`. The instructions in `apps/api/src/mcp/server.ts` ask for stress marks and Serbian in Cyrillic, ijekavian (the user is from Republika Srpska).
 - Test against the built API (`node dist/index.js`) on a throwaway `DATABASE_URL`; `RUSKY_API` points a second web dev server at it.
 
 ## Progress and sync

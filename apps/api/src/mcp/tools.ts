@@ -49,7 +49,10 @@ const wordFields = {
     .string()
     .min(1)
     .describe('The word or phrase in the language being learned, with stress marks'),
-  native: z.string().min(1).describe('The Serbian side, in Latin script'),
+  native: z
+    .string()
+    .min(1)
+    .describe('The Serbian side, in Cyrillic script and ijekavian (вријеме, not време)'),
   english: z.string().optional().describe('A short English gloss'),
   category: z.string().optional().describe('Greetings, Nouns, Verbs, Numbers, Time, Phrases…'),
   note: z

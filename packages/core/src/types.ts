@@ -60,7 +60,7 @@ export type Language = {
   code: string;
   name: string;
   english: string;
-  /** BCP 47 tag of the language on the other side of the card, e.g. sr-Latn. */
+  /** BCP 47 tag of the language on the other side of the card, e.g. sr-Cyrl. */
   native: string;
   nativeName: string;
   /** Weekday names starting on Sunday, with stress marks. */

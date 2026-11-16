@@ -14,20 +14,20 @@ Stress marks (´) show the stressed syllable. Stress moves around in Russian, so
 
 | Rule | Example |
 | --- | --- |
-| Unstressed **о** sounds like "a" | хорошо́ = "harashó", спаси́бо = "spasíba" |
-| **е** = "je", **э** = plain "e" | э́то (never "ето") |
-| **ы** is a hard "i", a separate letter from и | мы (never "ми") |
+| Unstressed **о** sounds like "а" | хорошо́ = "харашо́", спаси́бо = "спаси́ба" |
+| **е** = "је", **э** = plain "е" | э́то (never "ето") |
+| **ы** is a hard "и", a separate letter from и | мы (never "ми") |
 | **ь** has no sound; it softens the consonant before it | пять, фильм, пятьдеся́т |
-| **я** already contains the "a" sound | я (never "яа") |
-| Silent letters | здра́вствуйте = "zdrástvujte", сего́дня = "sivódnja" |
+| **я** already contains the "а" sound | я (never "яа") |
+| Silent letters | здра́вствуйте = "здра́ствујте", сего́дня = "сиво́дња" |
 | Days of the week are lowercase | понеде́льник, суббо́та |
 | After **к, г, х, ж, ш, щ, ч** write **и**, never ы | ру́сский, хоро́шие |
 
 ## 2. No "to be" in the present tense
 
-Serbian *Ja sam student* = **Я студе́нт.** The verb is simply left out.
+Serbian *Ја сам студент* = **Я студе́нт.** The verb is simply left out.
 
-In writing, a dash often replaces Serbian *je*: Москва́ — большо́й го́род.
+In writing, a dash often replaces Serbian *је*: Москва́ — большо́й го́род.
 
 ## 3. Noun gender
 
@@ -45,12 +45,12 @@ Exception: **ко́фе** is masculine and never changes form.
 
 | Russian | Serbian | English |
 | --- | --- | --- |
-| я | ja | I |
-| ты | ti | you (informal) |
-| он / она́ / оно́ | on / ona / ono | he / she / it |
-| мы | mi | we |
-| вы | vi | you (formal or plural) |
-| они́ | oni | they |
+| я | ја | I |
+| ты | ти | you (informal) |
+| он / она́ / оно́ | он / она / оно | he / she / it |
+| мы | ми | we |
+| вы | ви | you (formal or plural) |
+| они́ | они | they |
 
 ## 5. Present tense
 
@@ -85,7 +85,7 @@ Small changes in the я form: люби́ть → люб**л**ю́, ви́дет�
 
 ## 6. Past tense
 
-Take the **infinitive**, remove ‑ть, and add an ending for gender or number (like Serbian *radio / radila*).
+Take the **infinitive**, remove ‑ть, and add an ending for gender or number (like Serbian *радио / радила*).
 
 | Who | Ending | рабо́тать | смотре́ть | жить |
 | --- | --- | --- | --- | --- |
@@ -108,7 +108,7 @@ Russian says "at me there is": **у + person (genitive) + есть + thing (nomi
 | У нас / у вас / у них есть ... | We / you / they have ... |
 | У меня́ нет вре́мени. | I don't have time. (нет + genitive) |
 
-With a noun, use the genitive, like Serbian *kod mog brata*:
+With a noun, use the genitive, like Serbian *код мог брата*:
 
 | Nominative | After у |
 | --- | --- |
@@ -133,7 +133,7 @@ Works like the Serbian locative. Used after **в** (in) and **на** (on/at).
 
 ### Accusative (direct object)
 
-Works like Serbian *čitam knjigu*.
+Works like Serbian *читам књигу*.
 
 | Word type | Change | Example |
 | --- | --- | --- |
@@ -145,7 +145,7 @@ Works like Serbian *čitam knjigu*.
 
 ## 9. Possessives
 
-Agree with the noun's gender, like Serbian *moj / moja / moje / moji*.
+Agree with the noun's gender, like Serbian *мој / моја / моје / моји*.
 
 | | my | your (informal) |
 | --- | --- | --- |
@@ -170,9 +170,9 @@ Use ‑ий only after к, г, х, ж, ш, щ, ч. After н and в it is always 
 ## 11. Numbers and counting
 
 - **0–10:** ноль, оди́н, два, три, четы́ре, пять, шесть, семь, во́семь, де́вять, де́сять
-- **11–19:** add ‑надцать (Serbian ‑naest): оди́ннадцать, двена́дцать … девятна́дцать
+- **11–19:** add ‑надцать (Serbian ‑наест): оди́ннадцать, двена́дцать … девятна́дцать
 - **Tens:** два́дцать, три́дцать, **со́рок**, пятьдеся́т, шестьдеся́т, се́мьдесят, во́семьдесят, **девяно́сто**, сто
-- **Compounds** have no "i": 57 = пятьдеся́т семь
+- **Compounds** have no "и": 57 = пятьдеся́т семь
 
 ### Noun form after a number
 
@@ -209,7 +209,7 @@ Yes/no questions use the same word order as statements, with rising intonation: 
 
 | Wrong | Right | Why |
 | --- | --- | --- |
-| ето | э́то | е = "je", use э |
+| ето | э́то | е = "је", use э |
 | ми | мы | ы is a separate letter |
 | гледать | смотре́ть | Serbian word |
 | радит | рабо́тает | Serbian word |
@@ -228,9 +228,9 @@ Yes/no questions use the same word order as statements, with rising intonation: 
 
 | Russian | Means | Not |
 | --- | --- | --- |
-| неде́ля | week | nedelja (Sunday = воскресе́нье) |
-| фами́лия | surname | familija (family = семья́) |
-| живо́т | belly | život |
-| любить | to love | ljubiti (to kiss) |
-| столи́ца | capital city | stolica |
-| е́хать (ты е́дешь) | to go by vehicle | jesti (to eat = есть, ты ешь) |
+| неде́ля | week | недјеља (Sunday = воскресе́нье) |
+| фами́лия | surname | фамилија (family = семья́) |
+| живо́т | belly | живот |
+| любить | to love | љубити (to kiss) |
+| столи́ца | capital city | столица |
+| е́хать (ты е́дешь) | to go by vehicle | јести (to eat = есть, ты ешь) |
