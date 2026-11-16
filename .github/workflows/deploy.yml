@@ -2,19 +2,25 @@ name: Deploy
 
 on:
   push:
-    branches: [main, dev]
+    branches: [dev]
+  # Only a merged pull request into main deploys; a direct push to main does nothing.
   pull_request:
+    types: [opened, synchronize, reopened, closed]
 
 # A deploy killed mid-migrate leaves the database half-upgraded, so never cancel one.
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: deploy-${{ github.event.pull_request.merged && github.event.pull_request.base.ref || github.ref }}
   cancel-in-progress: false
 
 jobs:
   check:
+    if: github.event.action != 'closed' || github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # After a merge the PR's merge ref is stale; check what the server will deploy.
+          ref: ${{ github.event.pull_request.merged && github.event.pull_request.base.ref || '' }}
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -26,7 +32,7 @@ jobs:
 
   deploy:
     needs: check
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event.pull_request.merged && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     steps:
       # Rusky shares the Holocron server (holocron2). Everything below stays inside
