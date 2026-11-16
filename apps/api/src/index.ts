@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { logger } from 'hono/logger';
 import { auth, isRegistrationOpen } from './auth';
 import { env } from './env';
+import { connections } from './routes/connections';
 import { content } from './routes/content';
 import { connector, registrationStatus, tokenErrors } from './routes/oauth';
 import { sync } from './routes/sync';
@@ -23,6 +24,7 @@ api.on(['GET', 'POST'], '/auth/*', (c) => auth.handler(c.req.raw));
 
 api.get('/health', (c) => c.json({ ok: true }));
 api.get('/registration', async (c) => c.json({ open: await isRegistrationOpen() }));
+api.route('/connections', connections);
 api.route('/content', content);
 api.route('/sync', sync);
 

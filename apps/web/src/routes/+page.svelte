@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ChevronDown, ChevronRight, SlidersHorizontal } from '@lucide/svelte';
   import { localDay, MAX_BOX, planReview } from '@rusky/core';
+  import { auth } from '$lib/modules/auth/auth.svelte';
   import { content } from '$lib/modules/content/content.svelte';
   import { BOX_LABELS } from '$lib/modules/progress/constants';
   import { progress } from '$lib/modules/progress/progress.svelte';
@@ -33,16 +34,19 @@
       : ` from lessons ${lessons[0]}–${lessons[lessons.length - 1]}`;
   });
 
-  const boxes = $derived.by(() => {
-    const counts: number[] = Array(MAX_BOX).fill(0);
+  const tally = $derived.by(() => {
+    const boxes: number[] = Array(MAX_BOX).fill(0);
+    let done = 0;
     for (const card of content.cards) {
       const s = progress.states.get(card.id);
-      if (s?.reviews) counts[s.box - 1]++;
+      if (s?.done) done++;
+      else if (s?.reviews) boxes[s.box - 1]++;
     }
-    return counts;
+    return { boxes, done };
   });
-  const started = $derived(boxes.reduce((a, b) => a + b, 0));
-  const tallest = $derived(Math.max(1, ...boxes));
+  const started = $derived(tally.boxes.reduce((a, b) => a + b, tally.done));
+  const tallest = $derived(Math.max(1, tally.done, ...tally.boxes));
+  const stackHeight = (n: number) => `${Math.max(8, Math.round((n / tallest) * 64))}px`;
 
   const newest = $derived(content.level.lessons[content.level.lessons.length - 1]);
   const newestWords = $derived(
@@ -68,13 +72,22 @@
     </span>
     <ChevronDown size={16} strokeWidth={2.2} aria-hidden="true" />
   </button>
-  <a
-    href="/setup"
-    aria-label="New session"
-    class="flex size-11 items-center justify-center rounded-xl border border-edge bg-card text-ink"
-  >
-    <SlidersHorizontal size={20} strokeWidth={2} aria-hidden="true" />
-  </a>
+  <div class="flex items-center gap-2">
+    <a
+      href="/setup"
+      aria-label="New session"
+      class="flex size-11 items-center justify-center rounded-xl border border-edge bg-card text-ink"
+    >
+      <SlidersHorizontal size={20} strokeWidth={2} aria-hidden="true" />
+    </a>
+    <a
+      href="/profile"
+      aria-label="Profile"
+      class="flex size-11 items-center justify-center rounded-full bg-btn text-[17px] font-bold text-btn-fg"
+    >
+      {auth.initial}
+    </a>
+  </div>
 </div>
 
 <div class="px-5 pt-[18px]">
@@ -140,8 +153,8 @@
       {started ? 'a card moves right when you know it' : 'cards land here after their first review'}
     </span>
   </div>
-  <div class="mt-3.5 grid grid-cols-5 items-end gap-2.5">
-    {#each boxes as n, i (i)}
+  <div class="mt-3.5 grid grid-cols-6 items-end gap-2">
+    {#each tally.boxes as n, i (i)}
       <div class="flex flex-col items-center gap-1">
         <div
           aria-hidden="true"
@@ -149,12 +162,21 @@
             'paper-stack w-full rounded border border-t-[3px] border-strong',
             i === 0 ? 'border-t-target' : 'border-t-ink',
           ]}
-          style:height="{Math.max(8, Math.round((n / tallest) * 64))}px"
+          style:height={stackHeight(n)}
         ></div>
         <div class="mt-1 text-base font-bold tabular-nums">{n}</div>
-        <div class="text-xs text-muted">{BOX_LABELS[i]}</div>
+        <div class="text-xs whitespace-nowrap text-muted">{BOX_LABELS[i]}</div>
       </div>
     {/each}
+    <div class="flex flex-col items-center gap-1">
+      <div
+        aria-hidden="true"
+        class="w-full rounded border-[1.5px] border-dashed border-strong bg-row"
+        style:height={stackHeight(tally.done)}
+      ></div>
+      <div class="mt-1 text-base font-bold text-muted tabular-nums">{tally.done}</div>
+      <div class="text-xs text-muted">done</div>
+    </div>
   </div>
 </section>
 

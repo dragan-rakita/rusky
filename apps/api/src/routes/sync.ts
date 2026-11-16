@@ -16,7 +16,7 @@ const syncBody = z.object({
       z.object({
         id: z.string().min(1).max(64),
         cardId: z.string().min(1).max(100),
-        grade: z.enum(['again', 'almost', 'knew']),
+        grade: z.enum(['again', 'almost', 'knew', 'done']),
         reviewedAt: z.number().int().positive(),
         firstSide: z.enum(['target', 'native']),
       }),

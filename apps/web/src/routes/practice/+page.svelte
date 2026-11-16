@@ -1,12 +1,12 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { X } from '@lucide/svelte';
-  import { intervalFor, localDay, newCardState, shuffle, type Card, type Grade } from '@rusky/core';
+  import { localDay, newCardState, shuffle, type Card, type Grade } from '@rusky/core';
   import { page } from '$app/state';
   import { content } from '$lib/modules/content/content.svelte';
   import FlashCard from '$lib/modules/practice/components/flash-card.svelte';
   import { GRADES, SNAP_BACK_MS } from '$lib/modules/practice/constants';
-  import { describeCard, frontSideFor, intervalLabel } from '$lib/modules/practice/faces';
+  import { describeCard, frontSideFor, gradeHint } from '$lib/modules/practice/faces';
   import { buildSession, parseSessionParams } from '$lib/modules/practice/session';
   import { newId, progress } from '$lib/modules/progress/progress.svelte';
   import { settings } from '$lib/modules/settings/settings.svelte';
@@ -21,7 +21,7 @@
   let index = $state(0);
   let flipped = $state(false);
   let instant = $state(false);
-  let results = $state({ again: 0, almost: 0, knew: 0 });
+  let results = $state<Record<Grade, number>>({ again: 0, almost: 0, knew: 0, done: 0 });
   let missed = $state.raw<Card[]>([]);
 
   $effect(() => {
@@ -43,16 +43,7 @@
   const isWords = $derived(params.mode === 'review' || params.deck === 'words');
   const front = $derived(card ? frontSideFor(card, firstSide, index) : 'target');
   const view = $derived(
-    card
-      ? describeCard(
-          card,
-          front,
-          content.language,
-          content.level,
-          content,
-          settings.values.showEnglish,
-        )
-      : null,
+    card ? describeCard(card, front, content.language, content.level, content) : null,
   );
   const cardState = $derived(
     card ? (progress.states.get(card.id) ?? newCardState()) : newCardState(),
@@ -98,9 +89,11 @@
   }
 
   function again() {
-    stack = shuffle(missed.length ? missed : (stack ?? []));
+    stack = shuffle(
+      missed.length ? missed : (stack ?? []).filter((c) => !progress.states.get(c.id)?.done),
+    );
     missed = [];
-    results = { again: 0, almost: 0, knew: 0 };
+    results = { again: 0, almost: 0, knew: 0, done: 0 };
     snapTo(0);
   }
 
@@ -167,8 +160,9 @@
         onflip={() => (flipped = !flipped)}
       />
 
-      <div class="mt-10 min-h-36 w-full max-w-[440px]">
-        {#if flipped}
+      <!-- A fixed height, so the card stays put whatever shows under it once flipped. -->
+      <div class="mt-10 h-36 w-full max-w-[440px] overflow-y-auto">
+        {#if flipped && view.details.length}
           <div class="flex flex-col gap-2.5 rounded-xl border border-line bg-card px-4 py-3.5">
             {#each view.details as d (d.key)}
               <div class="flex items-baseline gap-3">
@@ -183,7 +177,7 @@
               </div>
             {/each}
           </div>
-        {:else}
+        {:else if !flipped}
           <p class="flex items-center justify-center gap-2 pt-2 text-sm text-muted">
             Tap the card to flip it
           </p>
@@ -194,7 +188,7 @@
         <div>
           <div class={[MONO_LABEL, 'text-muted']}>STACK FINISHED</div>
           <h1 class="mt-1.5 text-3xl leading-tight font-bold tracking-[-0.02em]">
-            {total} cards, {results.knew} known
+            {total} cards, {results.knew + results.done} known
           </h1>
           <p class="mt-1.5 text-[15px] leading-snug text-muted">
             {#if results.again === 0}
@@ -205,10 +199,14 @@
             {/if}
           </p>
         </div>
-        <div class="grid grid-cols-3 gap-2.5">
+        <div class="grid grid-cols-4 gap-2">
           <div class="rounded-[14px] border border-line bg-card p-3.5">
             <div class="text-[28px] font-bold tabular-nums">{results.knew}</div>
             <div class="text-[13px] text-muted">knew it</div>
+          </div>
+          <div class="rounded-[14px] border-[1.5px] border-dashed border-strong bg-card p-3.5">
+            <div class="text-[28px] font-bold tabular-nums">{results.done}</div>
+            <div class="text-[13px] text-muted">done</div>
           </div>
           <div class="rounded-[14px] border border-line bg-card p-3.5">
             <div class="text-[28px] font-bold tabular-nums">{results.almost}</div>
@@ -251,27 +249,28 @@
         Show answer
       </button>
     {:else if card}
-      <div class="grid grid-cols-3 gap-2.5">
+      <div class="grid grid-cols-4 gap-2">
         {#each GRADES as g (g.grade)}
           <button
             type="button"
             onclick={() => grade(g.grade)}
             class={[
-              'flex h-16 flex-col items-center justify-center gap-0.5 rounded-[14px]',
+              'flex h-14 min-w-0 flex-col items-center justify-center rounded-[14px] px-1',
               g.grade === 'again' && 'border-[1.5px] border-target bg-card text-target',
               g.grade === 'almost' && 'border-[1.5px] border-strong bg-card text-ink',
               g.grade === 'knew' && 'bg-btn text-btn-fg',
+              g.grade === 'done' && 'border-[1.5px] border-dashed border-strong bg-card text-ink',
             ]}
           >
-            <span class="text-base font-semibold">{g.label}</span>
+            <span class="text-base leading-5 font-semibold whitespace-nowrap">{g.label}</span>
             <span
               class={[
-                'text-xs font-medium',
-                g.grade === 'almost' && 'text-muted',
+                'text-[11px] leading-4 font-medium whitespace-nowrap',
+                (g.grade === 'almost' || g.grade === 'done') && 'text-muted',
                 g.grade === 'knew' && 'text-btn-sub',
               ]}
             >
-              {intervalLabel(intervalFor(cardState, g.grade))}
+              {gradeHint(cardState, g.grade)}
             </span>
           </button>
         {/each}

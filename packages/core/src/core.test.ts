@@ -87,19 +87,34 @@ describe('leitner', () => {
       reviews: 5,
       introduced: '2026-11-01',
       lastGrade: 'knew',
+      done: false,
     };
     expect(applyGrade(s, 'again', '2026-11-16')).toMatchObject({ box: 1, due: '2026-11-17' });
   });
 
   it('keeps an almost-known card in its box', () => {
-    const s: CardState = { box: 3, due: null, reviews: 2, introduced: null, lastGrade: null };
+    const s: CardState = {
+      box: 3,
+      due: null,
+      reviews: 2,
+      introduced: null,
+      lastGrade: null,
+      done: false,
+    };
     expect(intervalFor(s, 'almost')).toBe(4);
     expect(intervalFor(s, 'knew')).toBe(7);
     expect(intervalFor(s, 'again')).toBe(1);
   });
 
   it('caps at box 5', () => {
-    const s: CardState = { box: 5, due: null, reviews: 9, introduced: null, lastGrade: null };
+    const s: CardState = {
+      box: 5,
+      due: null,
+      reviews: 9,
+      introduced: null,
+      lastGrade: null,
+      done: false,
+    };
     expect(applyGrade(s, 'knew', '2026-11-16')).toMatchObject({ box: 5, due: '2026-11-30' });
   });
 
@@ -110,6 +125,17 @@ describe('leitner', () => {
     ];
     expect(replay(events).get('c1')).toMatchObject({ box: 3, due: '2026-11-22', reviews: 2 });
     expect(replay([...events].reverse()).get('c1')).toEqual(replay(events).get('c1'));
+  });
+
+  it('retires a card marked done, and brings it back with any later grade', () => {
+    const known = applyGrade(newCardState(), 'knew', '2026-11-14');
+    const done = applyGrade(known, 'done', '2026-11-16');
+    expect(done).toMatchObject({ box: 2, due: null, done: true, reviews: 2 });
+    expect(applyGrade(done, 'again', '2026-11-20')).toMatchObject({
+      box: 1,
+      due: '2026-11-21',
+      done: false,
+    });
   });
 });
 
@@ -139,5 +165,21 @@ describe('queues', () => {
       'w4',
     ]);
     expect(buildStack(cards, states, '2026-11-16', 2, keep)).toHaveLength(2);
+  });
+
+  it('leaves done cards out of the review and out of chosen stacks', () => {
+    const states = replay([
+      { id: 'e1', cardId: 'w1', grade: 'knew', reviewedAt: at('2026-11-10'), firstSide: 'target' },
+      { id: 'e2', cardId: 'w1', grade: 'done', reviewedAt: at('2026-11-12'), firstSide: 'target' },
+    ]);
+    const plan = planReview(cards, states, '2026-11-16', 1);
+    expect(plan.due).toEqual([]);
+    expect(plan.fresh.map((c) => c.id)).toEqual(['w2']);
+    const keep = <T>(xs: T[]) => xs;
+    expect(buildStack(cards, states, '2026-11-16', 'all', keep).map((c) => c.id)).toEqual([
+      'w2',
+      'w3',
+      'w4',
+    ]);
   });
 });

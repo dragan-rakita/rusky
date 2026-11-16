@@ -24,7 +24,7 @@
 ## Content
 
 - **A signed-in account's words and grammar live in the database** (`lesson`, `word`, `grammar_topic`, `grammar_card`, per user), and the Claude connector edits them. `content_state.version` is bumped by every change; `/api/sync` reports it and the app refetches `GET /api/content` when it differs, caching the result in IndexedDB.
-- **`content/` is the starting point**: built into the web app for signed-out use, and copied into an account the first time it is used (`ensureContent`). Changing these files later does not change an existing account.
+- **`content/` is the starting point**: copied into an account the first time it is used (`ensureContent`). Changing these files later does not change an existing account. The web bundle holds only `content/languages.json` (`virtual:rusky/content`); words and grammar are never built into it.
 - `content/languages.json` lists the languages the app knows (a new language starts there); each has `content/<lang>/<level>/` with `words.csv`, `lessons.csv`, `grammar.md`, `topics.csv`, `grammar-cards.csv`. `parseLevelFiles` in core checks them, for the web build and the API alike.
 - **Card ids are permanent.** Progress is stored against them; changing or reusing an id loses or corrupts that card's history. New words get the next number (`ru-a1-w-170`); a corrected word keeps its id.
 - "target" is the language being learned (red, the card's Russian side), "native" the one the user speaks (blue, Serbian). Never hard-code Russian or Serbian in code; German comes later.
@@ -42,14 +42,24 @@
 ## Progress and sync
 
 - Every grade is an append-only review event (`id` made on the device, `cardId`, `grade`, `reviewedAt`, `firstSide`). Card boxes are never stored: `replay()` in core rebuilds them, so reviews from two phones merge in any order.
-- The web app keeps events in IndexedDB and works fully offline and signed out. `POST /api/sync { since, events }` uploads unsent events and returns everything after the cursor; the server ignores ids it already has.
+- The web app keeps events in IndexedDB and works fully offline once signed in. `POST /api/sync { since, events }` uploads unsent events and returns everything after the cursor; the server ignores ids it already has.
+- Grades are `again`, `almost`, `knew` (they move a card through the five boxes) and `done`, which retires a card: `CardState.done`, left out of `planReview` and `buildStack`, counted in its own column on Today and as known on the finished screen. Any later grade brings it back; the Words list shows a done word's "Done" control, which records an `again` (box 1, due tomorrow). `review.grade` is plain text, so `done` needed no migration.
 - Sign-up is open only while there are no users, unless `REGISTRATION_OPEN=true`.
+
+## Signed in only
+
+- Signed out the app is `/login` and nothing else, plus `/consent` for the connector (`PUBLIC_ROUTES` in `auth/constants`); `+layout.svelte` sends every other route to `/login`. `/login` resumes an OAuth flow with `oauthResumeUrl` and otherwise goes to Today once signed in.
+- No start-up server check: the user remembered in `localStorage['rusky.user']` is trusted, so the app opens offline. The background sync re-checks it; a 401 forgets the user and lands on `/login`.
+- Signed in with no cards on the device yet, the layout shows "Getting your cards" with Try again until the first `/api/content` arrives.
+- Sign out uploads what it can, keeps reviews that could not be uploaded (they go up at the next sign-in) and clears the cached words and grammar.
+- `/profile` (the round initial on Today) holds the name, email, `/profile/password`, sync, devices ("Sign out others"), the Claude connections and the connector address, and Sign out. Name, password and sessions go through better-auth (`update-user`, `change-password` with `revokeOtherSessions`, `list-sessions`, `revoke-other-sessions`). `GET /api/connections` lists the apps holding a live refresh token for this account (Claude asks for `offline_access`); `DELETE /api/connections/:clientId` removes its tokens and consent, so the next `/mcp` call gets 401 and its refresh token `invalid_grant`.
 
 ## Design
 
 - The design canvas is the Claude artifact "Rusky App Design" (light and dark rows). The card keeps the 7 × 3 shape of the user's paper cards; the stressed vowel is red.
 - Colours are tokens in `apps/web/src/routes/layout.css` (`--target`, `--native`, `--ink`, …), set per `[data-theme]`. Dark surfaces are neutral: no tint.
 - Theme is System / Light / Dark; `app.html` applies it before first paint from `localStorage['rusky.theme']`.
+- The app icon is a paper card with its red rule and "Rú" (the ú red) over a card with a blue rule, on ink. `yarn icons` (`scripts/make-icons.mjs`) reads the glyph outlines from Golos Text Bold in `node_modules/@fontsource/golos-text`, builds one SVG and writes `favicon.svg` (paths, no font) and the PNGs in `apps/web/static`. Rusky has no Playwright: run it as `PLAYWRIGHT_MODULE=<another project>/node_modules/playwright yarn icons`.
 
 ## Deployment
 

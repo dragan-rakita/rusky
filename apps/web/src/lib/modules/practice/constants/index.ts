@@ -13,6 +13,7 @@ export const GRADES: { grade: Grade; label: string; key: string }[] = [
   { grade: 'again', label: 'Again', key: '1' },
   { grade: 'almost', label: 'Almost', key: '2' },
   { grade: 'knew', label: 'Knew it', key: '3' },
+  { grade: 'done', label: 'Done', key: '4' },
 ];
 
 export const DECKS: { value: PracticeDeck; label: string }[] = [

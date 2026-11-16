@@ -7,7 +7,6 @@
   import BackLink from '$lib/modules/ui/components/back-link.svelte';
   import MiniCard from '$lib/modules/ui/components/mini-card.svelte';
   import Segmented from '$lib/modules/ui/components/segmented.svelte';
-  import Switch from '$lib/modules/ui/components/switch.svelte';
 
   const last = settings.values.lastSetup;
   const newestLesson = content.level.lessons[content.level.lessons.length - 1]?.number;
@@ -166,7 +165,7 @@
   {/if}
 </section>
 
-<section class="mx-5 mt-[22px]">
+<section class="mx-5 mt-[22px] mb-32">
   <h2 class="mb-2 text-[13px] font-semibold text-muted">Cards per session</h2>
   <Segmented
     label="Cards per session"
@@ -178,14 +177,6 @@
     onchange={(v) => (size = v)}
   />
 </section>
-
-<div class="mx-5 mt-[18px] mb-32">
-  <Switch
-    label="Show English after flipping"
-    checked={settings.values.showEnglish}
-    onchange={(v) => settings.update({ showEnglish: v })}
-  />
-</div>
 
 <div
   class="fixed inset-x-0 bottom-0 mx-auto max-w-[480px] bg-bg px-5 pt-3 pb-[max(1.75rem,var(--safe-bottom))]"

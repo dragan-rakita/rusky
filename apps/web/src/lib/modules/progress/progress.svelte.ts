@@ -112,10 +112,10 @@ class ProgressStore {
 
       for (const e of outgoing) this.#unsynced.delete(e.id);
       this.#cursor = body.cursor;
-      void content.refresh(body.contentVersion);
       if (incoming.length) this.events = [...this.events, ...incoming];
       this.pending = this.#unsynced.size;
       this.lastSyncAt = at;
+      await content.refresh(body.contentVersion);
     } catch (e) {
       this.syncError = e instanceof Error ? e.message : 'Sync failed';
     } finally {

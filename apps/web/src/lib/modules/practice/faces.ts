@@ -1,4 +1,12 @@
-import type { Card, Language, LevelContent, Side } from '@rusky/core';
+import {
+  intervalFor,
+  type Card,
+  type CardState,
+  type Grade,
+  type Language,
+  type LevelContent,
+  type Side,
+} from '@rusky/core';
 
 type Labels = { targetCode: string; nativeCode: string };
 
@@ -9,20 +17,27 @@ export function intervalLabel(days: number): string {
   return `in ${days} days`;
 }
 
+/** The second line of a grade button: when the card comes back if graded this way. */
+export function gradeHint(state: CardState, grade: Grade): string {
+  return grade === 'done' ? 'never again' : intervalLabel(intervalFor(state, grade));
+}
+
 export function frontSideFor(card: Card, choice: FirstSideChoice, index: number): Side {
   if (card.kind === 'grammar') return card.promptSide;
   if (choice === 'mix') return index % 2 === 0 ? 'target' : 'native';
   return choice;
 }
 
-/** Both faces of a card, the strip above the text, and what shows under it once turned. */
+/**
+ * Both faces of a card, the strip above the text, and what shows under it once turned:
+ * a word's note, or a grammar card's rule and topic.
+ */
 export function describeCard(
   card: Card,
   front: Side,
   language: Language,
   level: LevelContent,
   labels: Labels,
-  showEnglish: boolean,
 ) {
   const langTag = (side: Side) => (side === 'target' ? language.code : language.native);
   const code = (side: Side) => (side === 'target' ? labels.targetCode : labels.nativeCode);
@@ -30,10 +45,7 @@ export function describeCard(
   if (card.kind === 'word') {
     const back: Side = front === 'target' ? 'native' : 'target';
     const text = (side: Side) => (side === 'target' ? card.target : card.native);
-    const details: CardDetail[] = [];
-    if (showEnglish && card.english) details.push({ key: 'EN', value: card.english });
-    if (card.note) details.push({ key: 'NOTE', value: card.note });
-    details.push({ key: 'FROM', value: `Lesson ${card.lesson} · ${card.category}` });
+    const details: CardDetail[] = card.note ? [{ key: 'NOTE', value: card.note }] : [];
     return {
       front: {
         side: front,
