@@ -26,7 +26,9 @@
   };
 </script>
 
-<div class="@container relative mx-auto aspect-[7/3] w-full max-w-[440px] perspective-[1200px]">
+<div
+  class="@container relative mx-auto aspect-[7/3] w-full max-w-[440px] perspective-[1200px] lg:max-w-[560px]"
+>
   <div
     aria-hidden="true"
     class="absolute inset-0 translate-y-4 scale-95 rotate-[1.8deg] rounded-md border border-edge bg-paper"

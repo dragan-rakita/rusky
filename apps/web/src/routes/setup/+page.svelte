@@ -76,119 +76,124 @@
   ]);
 </script>
 
-<BackLink href="/" label="Today" />
-<h1 class="mx-5 mt-1 text-3xl leading-tight font-bold tracking-[-0.02em]">New session</h1>
+<div class="contents lg:mx-auto lg:block lg:w-full lg:max-w-[560px]">
+  <BackLink href="/" label="Today" />
+  <h1 class="mx-5 mt-1 text-3xl leading-tight font-bold tracking-[-0.02em]">New session</h1>
 
-<section class="mx-5 mt-5">
-  <h2 class="mb-2 text-[13px] font-semibold text-muted">Practice</h2>
-  <Segmented label="What to practice" options={DECKS} value={deck} onchange={(v) => (deck = v)} />
-</section>
-
-{#if groups.length}
-  <section class="mx-5 mt-[22px]">
-    <div class="mb-2 flex items-center justify-between">
-      <h2 class="text-[13px] font-semibold text-muted">
-        {deck === 'words' ? 'Lessons' : 'Topics'}
-      </h2>
-      <button
-        type="button"
-        onclick={toggleAll}
-        class="min-h-8 px-1 text-sm font-semibold text-native"
-      >
-        {selected.length === groups.length ? 'Clear' : 'All'}
-      </button>
-    </div>
-    <div
-      class="grid grid-cols-8 gap-1.5"
-      role="group"
-      aria-label={deck === 'words' ? 'Lessons' : 'Topics'}
-    >
-      {#each groups as g (g.n)}
-        {@const on = selected.includes(g.n)}
-        <button
-          type="button"
-          aria-pressed={on}
-          aria-label="{g.n}. {g.name}, {g.count} cards"
-          title={g.name}
-          onclick={() => toggle(g.n)}
-          class={[
-            'h-10 rounded-[10px] border text-[15px] font-semibold tabular-nums',
-            on ? 'border-btn bg-btn text-btn-fg' : 'border-edge bg-card text-ink',
-          ]}
-        >
-          {g.n}
-        </button>
-      {/each}
-    </div>
-    <p class="mt-2 text-[13px] text-muted">
-      {pool.length}
-      {deck === 'words' ? 'words' : 'cards'} in {selected.length}
-      {deck === 'words' ? 'lessons' : 'topics'}
-    </p>
+  <section class="mx-5 mt-5">
+    <h2 class="mb-2 text-[13px] font-semibold text-muted">Practice</h2>
+    <Segmented label="What to practice" options={DECKS} value={deck} onchange={(v) => (deck = v)} />
   </section>
-{:else}
-  <p class="mx-5 mt-3 text-[13px] text-muted">
-    {pool.length} cards: common mistakes and false friends.
-  </p>
-{/if}
 
-<section class="mx-5 mt-[22px]">
-  <h2 class="mb-2 text-[13px] font-semibold text-muted">Which side first</h2>
-  {#if deck === 'words'}
-    <div class="grid grid-cols-3 gap-2" role="group" aria-label="Which side first">
-      {#each sides as s (s.value)}
+  {#if groups.length}
+    <section class="mx-5 mt-[22px]">
+      <div class="mb-2 flex items-center justify-between">
+        <h2 class="text-[13px] font-semibold text-muted">
+          {deck === 'words' ? 'Lessons' : 'Topics'}
+        </h2>
         <button
           type="button"
-          aria-pressed={side === s.value}
-          onclick={() => (side = s.value)}
-          class={[
-            'flex h-[104px] flex-col items-center justify-between rounded-[14px] bg-card px-1.5 pt-3 pb-2.5',
-            side === s.value ? 'border-2 border-ink' : 'border border-edge',
-          ]}
+          onclick={toggleAll}
+          class="min-h-8 px-1 text-sm font-semibold text-native"
         >
-          {#if s.value === 'mix'}
-            <span class="relative block h-11 w-[92px]">
-              <MiniCard class="absolute top-0 left-2.5 rotate-[5deg]" side="native" />
-              <MiniCard class="absolute top-2 left-0.5 -rotate-[4deg] shadow-lift" side="target" />
-            </span>
-          {:else if s.value === 'target'}
-            <MiniCard width={86} side="target" text="соба́ка" class="shadow-lift" />
-          {:else}
-            <MiniCard width={86} side="native" text="pas" class="shadow-lift" />
-          {/if}
-          <span class="text-sm font-semibold">{s.label}</span>
+          {selected.length === groups.length ? 'Clear' : 'All'}
         </button>
-      {/each}
-    </div>
+      </div>
+      <div
+        class="grid grid-cols-8 gap-1.5"
+        role="group"
+        aria-label={deck === 'words' ? 'Lessons' : 'Topics'}
+      >
+        {#each groups as g (g.n)}
+          {@const on = selected.includes(g.n)}
+          <button
+            type="button"
+            aria-pressed={on}
+            aria-label="{g.n}. {g.name}, {g.count} cards"
+            title={g.name}
+            onclick={() => toggle(g.n)}
+            class={[
+              'h-10 rounded-[10px] border text-[15px] font-semibold tabular-nums',
+              on ? 'border-btn bg-btn text-btn-fg' : 'border-edge bg-card text-ink',
+            ]}
+          >
+            {g.n}
+          </button>
+        {/each}
+      </div>
+      <p class="mt-2 text-[13px] text-muted">
+        {pool.length}
+        {deck === 'words' ? 'words' : 'cards'} in {selected.length}
+        {deck === 'words' ? 'lessons' : 'topics'}
+      </p>
+    </section>
   {:else}
-    <p class="text-[13px] text-muted">Grammar cards always start with the question.</p>
+    <p class="mx-5 mt-3 text-[13px] text-muted">
+      {pool.length} cards: common mistakes and false friends.
+    </p>
   {/if}
-</section>
 
-<section class="mx-5 mt-[22px] mb-32">
-  <h2 class="mb-2 text-[13px] font-semibold text-muted">Cards per session</h2>
-  <Segmented
-    label="Cards per session"
-    options={SESSION_SIZES.map((s) => ({
-      value: s,
-      label: s === 'all' ? `All ${pool.length}` : s,
-    }))}
-    value={size as (typeof SESSION_SIZES)[number]}
-    onchange={(v) => (size = v)}
-  />
-</section>
+  <section class="mx-5 mt-[22px]">
+    <h2 class="mb-2 text-[13px] font-semibold text-muted">Which side first</h2>
+    {#if deck === 'words'}
+      <div class="grid grid-cols-3 gap-2" role="group" aria-label="Which side first">
+        {#each sides as s (s.value)}
+          <button
+            type="button"
+            aria-pressed={side === s.value}
+            onclick={() => (side = s.value)}
+            class={[
+              'flex h-[104px] flex-col items-center justify-between rounded-[14px] bg-card px-1.5 pt-3 pb-2.5',
+              side === s.value ? 'border-2 border-ink' : 'border border-edge',
+            ]}
+          >
+            {#if s.value === 'mix'}
+              <span class="relative block h-11 w-[92px]">
+                <MiniCard class="absolute top-0 left-2.5 rotate-[5deg]" side="native" />
+                <MiniCard
+                  class="absolute top-2 left-0.5 -rotate-[4deg] shadow-lift"
+                  side="target"
+                />
+              </span>
+            {:else if s.value === 'target'}
+              <MiniCard width={86} side="target" text="соба́ка" class="shadow-lift" />
+            {:else}
+              <MiniCard width={86} side="native" text="pas" class="shadow-lift" />
+            {/if}
+            <span class="text-sm font-semibold">{s.label}</span>
+          </button>
+        {/each}
+      </div>
+    {:else}
+      <p class="text-[13px] text-muted">Grammar cards always start with the question.</p>
+    {/if}
+  </section>
 
-<div
-  class="fixed inset-x-0 bottom-0 mx-auto max-w-[480px] bg-bg px-5 pt-3 pb-[max(1.75rem,var(--safe-bottom))]"
->
-  <button
-    type="button"
-    onclick={start}
-    disabled={count === 0}
-    class="flex h-14 w-full items-center justify-center rounded-[14px] bg-btn text-[17px] font-semibold text-btn-fg disabled:opacity-50"
+  <section class="mx-5 mt-[22px] mb-32 lg:mb-0">
+    <h2 class="mb-2 text-[13px] font-semibold text-muted">Cards per session</h2>
+    <Segmented
+      label="Cards per session"
+      options={SESSION_SIZES.map((s) => ({
+        value: s,
+        label: s === 'all' ? `All ${pool.length}` : s,
+      }))}
+      value={size as (typeof SESSION_SIZES)[number]}
+      onchange={(v) => (size = v)}
+    />
+  </section>
+
+  <div
+    class="fixed inset-x-0 bottom-0 mx-auto max-w-[480px] bg-bg px-5 pt-3 pb-[max(1.75rem,var(--safe-bottom))] lg:sticky lg:mt-5 lg:max-w-none"
   >
-    {count > 0
-      ? `Start · ${count} cards`
-      : `Pick at least one ${deck === 'words' ? 'lesson' : 'topic'}`}
-  </button>
+    <button
+      type="button"
+      onclick={start}
+      disabled={count === 0}
+      class="flex h-14 w-full items-center justify-center rounded-[14px] bg-btn text-[17px] font-semibold text-btn-fg disabled:opacity-50"
+    >
+      {count > 0
+        ? `Start · ${count} cards`
+        : `Pick at least one ${deck === 'words' ? 'lesson' : 'topic'}`}
+    </button>
+  </div>
 </div>

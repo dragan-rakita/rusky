@@ -1,5 +1,37 @@
+import { Layers, List, SlidersHorizontal, Table2 } from '@lucide/svelte';
+
 /** Routes that show the bottom tab bar; practice and forms take the whole screen. */
 export const TAB_ROUTES = ['/', '/words', '/grammar', '/grammar/[slug]'];
+
+/** Routes that show the sidebar on a wide screen, where it replaces the tab bar. */
+export const SIDEBAR_ROUTES = [...TAB_ROUTES, '/setup', '/profile', '/profile/password'];
+
+/** Routes without the sidebar that still widen their column on a wide screen. */
+export const FOCUS_ROUTES = ['/practice'];
+
+/** Tailwind's `lg` breakpoint, for the few places script has to know the layout. */
+export const DESKTOP_QUERY = '(min-width: 64rem)';
+
+export const NAV_TABS = [
+  { href: '/', label: 'Today', icon: Layers, match: (p: string) => p === '/' },
+  { href: '/words', label: 'Words', icon: List, match: (p: string) => p.startsWith('/words') },
+  {
+    href: '/grammar',
+    label: 'Grammar',
+    icon: Table2,
+    match: (p: string) => p.startsWith('/grammar'),
+  },
+];
+
+export const SIDEBAR_LINKS = [
+  ...NAV_TABS,
+  {
+    href: '/setup',
+    label: 'New session',
+    icon: SlidersHorizontal,
+    match: (p: string) => p.startsWith('/setup'),
+  },
+];
 
 /** Languages on the way, shown as not started until their content folder exists. */
 export const PLANNED_LANGUAGES = [

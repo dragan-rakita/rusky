@@ -59,6 +59,7 @@
 - The design canvas is the Claude artifact "Rusky App Design" (light and dark rows). The card keeps the 7 × 3 shape of the user's paper cards; the stressed vowel is red.
 - Colours are tokens in `apps/web/src/routes/layout.css` (`--target`, `--native`, `--ink`, …), set per `[data-theme]`. Dark surfaces are neutral: no tint.
 - Theme is System / Light / Dark; `app.html` applies it before first paint from `localStorage['rusky.theme']`.
+- Mobile first: below 1024px nothing changes; every desktop rule is behind `lg:` (wrappers are `contents` on the phone). From `lg`, `SIDEBAR_ROUTES` sit in a centred 1280px frame with a sticky 240px sidebar instead of the tab bar; practice is a wider column without it; login and consent stay narrow. Grammar is master–detail: the topic list in a sticky pane, the note beside it, `/grammar` showing the first topic.
 - The app icon is a paper card with its red rule and "Rú" (the ú red) over a card with a blue rule, on ink. `yarn icons` (`scripts/make-icons.mjs`) reads the glyph outlines from Golos Text Bold in `node_modules/@fontsource/golos-text`, builds one SVG and writes `favicon.svg` (paths, no font) and the PNGs in `apps/web/static`. Rusky has no Playwright: run it as `PLAYWRIGHT_MODULE=<another project>/node_modules/playwright yarn icons`.
 
 ## Deployment

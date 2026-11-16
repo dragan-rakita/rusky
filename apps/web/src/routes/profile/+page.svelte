@@ -127,148 +127,152 @@
   }
 </script>
 
-<BackLink href="/" label="Today" />
+<div class="contents lg:mx-auto lg:block lg:w-full lg:max-w-[560px]">
+  <BackLink href="/" label="Today" />
 
-<h1 class="px-5 pt-1 text-3xl leading-tight font-bold tracking-[-0.02em]">Profile</h1>
+  <h1 class="px-5 pt-1 text-3xl leading-tight font-bold tracking-[-0.02em]">Profile</h1>
 
-<div class="mx-5 mt-3.5 flex items-center gap-3.5">
-  <span
-    aria-hidden="true"
-    class="flex size-14 shrink-0 items-center justify-center rounded-full bg-btn text-[22px] font-bold text-btn-fg"
-  >
-    {auth.initial}
-  </span>
-  <div class="flex min-w-0 flex-col gap-px">
-    <span class="truncate text-xl font-bold tracking-[-0.01em]">{auth.user?.name}</span>
-    <span class="truncate text-sm text-muted">{auth.user?.email}</span>
-  </div>
-</div>
-
-<h2 class={[MONO_LABEL, 'mx-5 mt-5 mb-2 text-muted']}>ACCOUNT</h2>
-<div class="mx-5 overflow-hidden rounded-2xl border border-line bg-card">
-  <div class="flex min-h-[52px] items-center justify-between gap-3 border-b border-row pr-2 pl-4">
-    <label for="profile-name" class="flex flex-col text-[15px]">
-      Name
-      {#if nameNote}
-        <span class="text-xs text-muted" aria-live="polite">{nameNote}</span>
-      {/if}
-    </label>
-    <input
-      id="profile-name"
-      type="text"
-      autocomplete="name"
-      enterkeyhint="done"
-      maxlength="80"
-      bind:value={name}
-      onblur={saveName}
-      onkeydown={(e) => {
-        if (e.key === 'Enter') e.currentTarget.blur();
-      }}
-      class="h-9 w-[190px] rounded-[9px] border border-edge bg-bg px-2.5 text-right text-[15px] text-ink outline-none focus:border-ink"
-    />
-  </div>
-  <div class="flex min-h-[52px] items-center justify-between gap-3 border-b border-row px-4">
-    <span class="text-[15px]">Email</span>
-    <span class="truncate text-[15px] text-muted">{auth.user?.email}</span>
-  </div>
-  <a
-    href="/profile/password"
-    class="flex min-h-[52px] items-center justify-between gap-3 pr-3 pl-4 text-ink"
-  >
-    <span class="text-[15px]">Password</span>
-    <span class="flex items-center gap-1.5 text-[15px] text-muted">
-      Change
-      <ChevronRight size={16} strokeWidth={2.2} aria-hidden="true" />
+  <div class="mx-5 mt-3.5 flex items-center gap-3.5">
+    <span
+      aria-hidden="true"
+      class="flex size-14 shrink-0 items-center justify-center rounded-full bg-btn text-[22px] font-bold text-btn-fg"
+    >
+      {auth.initial}
     </span>
-  </a>
-</div>
+    <div class="flex min-w-0 flex-col gap-px">
+      <span class="truncate text-xl font-bold tracking-[-0.01em]">{auth.user?.name}</span>
+      <span class="truncate text-sm text-muted">{auth.user?.email}</span>
+    </div>
+  </div>
 
-<h2 class={[MONO_LABEL, 'mx-5 mt-4 mb-2 text-muted']}>SYNC AND DEVICES</h2>
-<div class="mx-5 overflow-hidden rounded-2xl border border-line bg-card">
-  <div class="flex min-h-[60px] items-center justify-between gap-3 border-b border-row pr-2 pl-4">
-    <div class="flex min-w-0 flex-col py-2">
-      <span class="text-[15px] font-semibold">Sync</span>
-      <span class={['text-[13px]', progress.syncError ? 'text-target' : 'text-muted']}>
-        {syncedLabel}
+  <h2 class={[MONO_LABEL, 'mx-5 mt-5 mb-2 text-muted']}>ACCOUNT</h2>
+  <div class="mx-5 overflow-hidden rounded-2xl border border-line bg-card">
+    <div class="flex min-h-[52px] items-center justify-between gap-3 border-b border-row pr-2 pl-4">
+      <label for="profile-name" class="flex flex-col text-[15px]">
+        Name
+        {#if nameNote}
+          <span class="text-xs text-muted" aria-live="polite">{nameNote}</span>
+        {/if}
+      </label>
+      <input
+        id="profile-name"
+        type="text"
+        autocomplete="name"
+        enterkeyhint="done"
+        maxlength="80"
+        bind:value={name}
+        onblur={saveName}
+        onkeydown={(e) => {
+          if (e.key === 'Enter') e.currentTarget.blur();
+        }}
+        class="h-9 w-[190px] rounded-[9px] border border-edge bg-bg px-2.5 text-right text-[15px] text-ink outline-none focus:border-ink"
+      />
+    </div>
+    <div class="flex min-h-[52px] items-center justify-between gap-3 border-b border-row px-4">
+      <span class="text-[15px]">Email</span>
+      <span class="truncate text-[15px] text-muted">{auth.user?.email}</span>
+    </div>
+    <a
+      href="/profile/password"
+      class="flex min-h-[52px] items-center justify-between gap-3 pr-3 pl-4 text-ink"
+    >
+      <span class="text-[15px]">Password</span>
+      <span class="flex items-center gap-1.5 text-[15px] text-muted">
+        Change
+        <ChevronRight size={16} strokeWidth={2.2} aria-hidden="true" />
       </span>
-    </div>
-    <button
-      type="button"
-      onclick={() => progress.sync()}
-      disabled={progress.syncing}
-      class={PROFILE_ACTION}
-    >
-      Sync now
-    </button>
+    </a>
   </div>
-  <div class="flex min-h-[60px] items-center justify-between gap-3 pr-2 pl-4">
-    <div class="flex min-w-0 flex-col py-2">
-      <span class="text-[15px] font-semibold">Devices</span>
-      <span class="text-[13px] text-muted">{devicesLabel}</span>
-    </div>
-    <button
-      type="button"
-      onclick={signOutOthers}
-      disabled={busy !== null || devices === null || devices <= 1}
-      class={PROFILE_ACTION}
-    >
-      Sign out others
-    </button>
-  </div>
-</div>
 
-<h2 class={[MONO_LABEL, 'mx-5 mt-4 mb-2 text-muted']}>CLAUDE</h2>
-<div class="mx-5 overflow-hidden rounded-2xl border border-line bg-card">
-  {#each connections ?? [] as c (c.clientId)}
+  <h2 class={[MONO_LABEL, 'mx-5 mt-4 mb-2 text-muted']}>SYNC AND DEVICES</h2>
+  <div class="mx-5 overflow-hidden rounded-2xl border border-line bg-card">
     <div class="flex min-h-[60px] items-center justify-between gap-3 border-b border-row pr-2 pl-4">
       <div class="flex min-w-0 flex-col py-2">
-        <span class="truncate text-[15px] font-semibold">{c.name}</span>
-        <span class="text-[13px] text-muted">Connected{day(c.connectedAt)}</span>
+        <span class="text-[15px] font-semibold">Sync</span>
+        <span class={['text-[13px]', progress.syncError ? 'text-target' : 'text-muted']}>
+          {syncedLabel}
+        </span>
       </div>
       <button
         type="button"
-        onclick={() => disconnect(c)}
-        disabled={busy !== null}
+        onclick={() => progress.sync()}
+        disabled={progress.syncing}
         class={PROFILE_ACTION}
       >
-        Disconnect
+        Sync now
       </button>
     </div>
-  {:else}
-    <p class="border-b border-row px-4 py-3 text-[15px] leading-snug">
-      {#if connections === null}
-        <span class="text-muted">Needs a connection to show what is connected.</span>
-      {:else}
-        Not connected. In Claude, add a custom connector with the address below, so Claude can add
-        the words and grammar from your lessons.
-      {/if}
-    </p>
-  {/each}
-  <div class="flex min-h-[60px] items-center justify-between gap-2.5 pr-2 pl-4">
-    <div class="flex min-w-0 flex-col py-2">
-      <span class="text-[13px] text-muted">Connector address</span>
-      <code class="truncate font-mono text-[13px] font-medium">{connectorUrl}</code>
+    <div class="flex min-h-[60px] items-center justify-between gap-3 pr-2 pl-4">
+      <div class="flex min-w-0 flex-col py-2">
+        <span class="text-[15px] font-semibold">Devices</span>
+        <span class="text-[13px] text-muted">{devicesLabel}</span>
+      </div>
+      <button
+        type="button"
+        onclick={signOutOthers}
+        disabled={busy !== null || devices === null || devices <= 1}
+        class={PROFILE_ACTION}
+      >
+        Sign out others
+      </button>
     </div>
-    <button type="button" onclick={copyConnectorUrl} class={PROFILE_ACTION}>
-      {copied ? 'Copied' : 'Copy'}
-    </button>
   </div>
-</div>
 
-{#if error}
-  <p role="alert" class="mx-5 mt-3 text-[15px] text-target">{error}</p>
-{/if}
+  <h2 class={[MONO_LABEL, 'mx-5 mt-4 mb-2 text-muted']}>CLAUDE</h2>
+  <div class="mx-5 overflow-hidden rounded-2xl border border-line bg-card">
+    {#each connections ?? [] as c (c.clientId)}
+      <div
+        class="flex min-h-[60px] items-center justify-between gap-3 border-b border-row pr-2 pl-4"
+      >
+        <div class="flex min-w-0 flex-col py-2">
+          <span class="truncate text-[15px] font-semibold">{c.name}</span>
+          <span class="text-[13px] text-muted">Connected{day(c.connectedAt)}</span>
+        </div>
+        <button
+          type="button"
+          onclick={() => disconnect(c)}
+          disabled={busy !== null}
+          class={PROFILE_ACTION}
+        >
+          Disconnect
+        </button>
+      </div>
+    {:else}
+      <p class="border-b border-row px-4 py-3 text-[15px] leading-snug">
+        {#if connections === null}
+          <span class="text-muted">Needs a connection to show what is connected.</span>
+        {:else}
+          Not connected. In Claude, add a custom connector with the address below, so Claude can add
+          the words and grammar from your lessons.
+        {/if}
+      </p>
+    {/each}
+    <div class="flex min-h-[60px] items-center justify-between gap-2.5 pr-2 pl-4">
+      <div class="flex min-w-0 flex-col py-2">
+        <span class="text-[13px] text-muted">Connector address</span>
+        <code class="truncate font-mono text-[13px] font-medium">{connectorUrl}</code>
+      </div>
+      <button type="button" onclick={copyConnectorUrl} class={PROFILE_ACTION}>
+        {copied ? 'Copied' : 'Copy'}
+      </button>
+    </div>
+  </div>
 
-<div class="mx-5 mt-5 flex flex-col gap-2 pb-[max(1.75rem,var(--safe-bottom))]">
-  <button
-    type="button"
-    onclick={signOut}
-    disabled={busy !== null}
-    class="h-[52px] rounded-[14px] border-[1.5px] border-strong bg-card text-base font-semibold text-target disabled:opacity-60"
-  >
-    {busy === 'signout' ? 'Signing out…' : 'Sign out'}
-  </button>
-  <p class="text-center text-[13px] leading-snug text-muted">
-    This device forgets your cards. They stay in your account.
-  </p>
+  {#if error}
+    <p role="alert" class="mx-5 mt-3 text-[15px] text-target">{error}</p>
+  {/if}
+
+  <div class="mx-5 mt-5 flex flex-col gap-2 pb-[max(1.75rem,var(--safe-bottom))]">
+    <button
+      type="button"
+      onclick={signOut}
+      disabled={busy !== null}
+      class="h-[52px] rounded-[14px] border-[1.5px] border-strong bg-card text-base font-semibold text-target disabled:opacity-60"
+    >
+      {busy === 'signout' ? 'Signing out…' : 'Sign out'}
+    </button>
+    <p class="text-center text-[13px] leading-snug text-muted">
+      This device forgets your cards. They stay in your account.
+    </p>
+  </div>
 </div>

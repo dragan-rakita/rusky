@@ -144,7 +144,9 @@
     </div>
   {/if}
 
-  <div class="flex flex-1 flex-col items-center justify-center px-5">
+  <div
+    class="flex flex-1 flex-col items-center justify-center px-5 lg:mt-auto lg:flex-none lg:pt-8"
+  >
     {#if stack && total === 0}
       <div class="text-center">
         <h1 class="text-2xl font-bold">Nothing to practise here</h1>
@@ -161,7 +163,7 @@
       />
 
       <!-- A fixed height, so the card stays put whatever shows under it once flipped. -->
-      <div class="mt-10 h-36 w-full max-w-[440px] overflow-y-auto">
+      <div class="mt-10 h-36 w-full max-w-[440px] overflow-y-auto lg:max-w-[560px]">
         {#if flipped && view.details.length}
           <div class="flex flex-col gap-2.5 rounded-xl border border-line bg-card px-4 py-3.5">
             {#each view.details as d (d.key)}
@@ -179,12 +181,20 @@
           </div>
         {:else if !flipped}
           <p class="flex items-center justify-center gap-2 pt-2 text-sm text-muted">
-            Tap the card to flip it
+            <span class="lg:hidden">Tap the card to flip it</span>
+            <span class="hidden lg:inline">
+              Press
+              <kbd
+                class="mx-0.5 rounded-md border border-edge bg-card px-1.5 py-px font-mono text-[11px] font-semibold text-ink"
+                >Space</kbd
+              >
+              to flip it
+            </span>
           </p>
         {/if}
       </div>
     {:else if done}
-      <div class="flex w-full max-w-[440px] flex-col gap-[18px]">
+      <div class="flex w-full max-w-[440px] flex-col gap-[18px] lg:max-w-[560px]">
         <div>
           <div class={[MONO_LABEL, 'text-muted']}>STACK FINISHED</div>
           <h1 class="mt-1.5 text-3xl leading-tight font-bold tracking-[-0.02em]">
@@ -239,14 +249,20 @@
     {/if}
   </div>
 
-  <div class="px-5 pt-3 pb-[max(1.75rem,var(--safe-bottom))]">
+  <div class="px-5 pt-3 pb-[max(1.75rem,var(--safe-bottom))] lg:mb-auto">
     {#if card && !flipped}
       <button
         type="button"
         onclick={() => (flipped = true)}
+        aria-keyshortcuts="Space"
         class="h-14 w-full rounded-[14px] bg-btn text-[17px] font-semibold text-btn-fg"
       >
         Show answer
+        <kbd
+          aria-hidden="true"
+          class="ml-2 hidden rounded-md border border-btn-sub px-1.5 py-px align-[2px] font-mono text-[11px] font-semibold text-btn-sub lg:inline-block"
+          >Space</kbd
+        >
       </button>
     {:else if card}
       <div class="grid grid-cols-4 gap-2">
@@ -254,14 +270,21 @@
           <button
             type="button"
             onclick={() => grade(g.grade)}
+            aria-keyshortcuts={g.key}
             class={[
-              'flex h-14 min-w-0 flex-col items-center justify-center rounded-[14px] px-1',
+              'flex h-14 min-w-0 flex-col items-center justify-center rounded-[14px] px-1 lg:relative',
               g.grade === 'again' && 'border-[1.5px] border-target bg-card text-target',
               g.grade === 'almost' && 'border-[1.5px] border-strong bg-card text-ink',
               g.grade === 'knew' && 'bg-btn text-btn-fg',
               g.grade === 'done' && 'border-[1.5px] border-dashed border-strong bg-card text-ink',
             ]}
           >
+            <kbd
+              aria-hidden="true"
+              class="absolute top-1.5 right-2 hidden font-mono text-[10px] leading-none font-semibold opacity-60 lg:block"
+            >
+              {g.key}
+            </kbd>
             <span class="text-base leading-5 font-semibold whitespace-nowrap">{g.label}</span>
             <span
               class={[

@@ -1,25 +1,14 @@
 <script lang="ts">
-  import { Layers, List, Table2 } from '@lucide/svelte';
   import { page } from '$app/state';
-
-  const tabs = [
-    { href: '/', label: 'Today', icon: Layers, match: (p: string) => p === '/' },
-    { href: '/words', label: 'Words', icon: List, match: (p: string) => p.startsWith('/words') },
-    {
-      href: '/grammar',
-      label: 'Grammar',
-      icon: Table2,
-      match: (p: string) => p.startsWith('/grammar'),
-    },
-  ];
+  import { NAV_TABS } from '../constants';
 </script>
 
 <nav
   aria-label="Main"
-  class="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[480px] border-t border-line bg-nav pb-[max(0.75rem,var(--safe-bottom))]"
+  class="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[480px] border-t border-line bg-nav pb-[max(0.75rem,var(--safe-bottom))] lg:hidden"
 >
   <div class="grid grid-cols-3 pt-1.5">
-    {#each tabs as tab (tab.href)}
+    {#each NAV_TABS as tab (tab.href)}
       {@const active = tab.match(page.url.pathname)}
       <a
         href={tab.href}

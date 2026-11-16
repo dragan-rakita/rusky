@@ -29,11 +29,11 @@
     if (e.target === dialog) open = false;
   }}
   aria-labelledby="settings-title"
-  class="mx-auto mt-auto mb-0 max-h-[92svh] w-full max-w-[480px] overflow-y-auto rounded-t-3xl bg-card px-5 pt-2.5 pb-[max(1.75rem,var(--safe-bottom))] text-ink backdrop:bg-black/50"
+  class="mx-auto mt-auto mb-0 max-h-[92svh] w-full max-w-[480px] overflow-y-auto rounded-t-3xl bg-card px-5 pt-2.5 pb-[max(1.75rem,var(--safe-bottom))] text-ink backdrop:bg-black/50 lg:mb-auto lg:max-w-[520px] lg:rounded-3xl lg:px-6 lg:pt-5 lg:pb-6"
 >
-  <div aria-hidden="true" class="mx-auto h-[5px] w-10 rounded-full bg-strong"></div>
+  <div aria-hidden="true" class="mx-auto h-[5px] w-10 rounded-full bg-strong lg:hidden"></div>
 
-  <div class="mt-2.5 flex items-center justify-between">
+  <div class="mt-2.5 flex items-center justify-between lg:mt-0">
     <h2 id="settings-title" class="text-[22px] font-bold tracking-[-0.01em]">Languages</h2>
     <button
       type="button"
