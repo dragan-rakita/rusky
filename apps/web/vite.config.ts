@@ -5,6 +5,10 @@ import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vite';
 import { ruskyContent } from './content-plugin.ts';
 
+// Where /api, /mcp and the OAuth discovery documents go in dev; RUSKY_API points a second
+// dev server at another API, e.g. a throwaway one for tests.
+const API = process.env.RUSKY_API ?? 'http://127.0.0.1:1390';
+
 export default defineConfig({
   plugins: [
     ruskyContent(path.resolve(import.meta.dirname, '../../content')),
@@ -40,7 +44,7 @@ export default defineConfig({
         // The whole app is small and has to work on the metro, so everything is precached.
         globPatterns: ['client/**/*.{js,css,html,ico,png,svg,webmanifest,woff2}'],
         // Progress and sign-in live behind /api and must never come from a cache.
-        navigateFallbackDenylist: [/^\/api\//],
+        navigateFallbackDenylist: [/^\/api\//, /^\/mcp/, /^\/\.well-known\//],
       },
     }),
   ],
@@ -49,7 +53,9 @@ export default defineConfig({
     port: 1389,
     strictPort: true,
     proxy: {
-      '/api': 'http://127.0.0.1:1390',
+      '/api': API,
+      '/mcp': API,
+      '/.well-known/oauth-': API,
     },
   },
 });

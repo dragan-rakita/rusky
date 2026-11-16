@@ -90,4 +90,30 @@ export type SyncRequest = {
 export type SyncResponse = {
   cursor: number;
   events: ReviewEvent[];
+  /** Bumped by every change to the account's words or grammar; a new value means refetch. */
+  contentVersion: number;
+};
+
+/** A grammar topic as written: Markdown, before it is rendered for the app. */
+export type GrammarTopicSource = {
+  number: number;
+  slug: string;
+  title: string;
+  summary: string;
+  markdown: string;
+};
+
+/** One level's content as stored, before the grammar notes are rendered. */
+export type LevelSources = {
+  language: string;
+  level: string;
+  lessons: { number: number; title: string }[];
+  words: WordCard[];
+  topics: GrammarTopicSource[];
+  grammarCards: GrammarCard[];
+};
+
+export type ContentResponse = {
+  version: number;
+  levels: Record<string, LevelContent>;
 };

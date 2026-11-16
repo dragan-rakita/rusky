@@ -2,6 +2,7 @@ import { and, asc, eq, gt } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import type { ReviewEvent, SyncResponse } from '@rusky/core';
+import { ensureContent } from '../content/store';
 import { db } from '../db';
 import { review } from '../db/schema';
 import type { AppEnv } from '../types';
@@ -54,6 +55,7 @@ export const sync = new Hono<AppEnv>().post('/', async (c) => {
 
   const body: SyncResponse = {
     cursor: rows.length ? rows[rows.length - 1].seq : since,
+    contentVersion: ensureContent(user.id),
     events: rows.map((r): ReviewEvent => ({
       id: r.id,
       cardId: r.cardId,

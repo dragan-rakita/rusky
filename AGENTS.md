@@ -23,12 +23,21 @@
 
 ## Content
 
-- `content/languages.json` lists languages; each has `content/<lang>/<level>/` with `words.csv`, `lessons.csv`, `grammar.md`, `topics.csv`, `grammar-cards.csv`.
-- The web build reads these through `apps/web/content-plugin.ts` (`virtual:rusky/content`) and fails the build on a duplicate id, a missing lesson title, or a grammar card pointing at a topic `grammar.md` lacks.
-- **Card ids are permanent.** Progress is stored against them; changing or reusing an id loses or corrupts that card's history. New words get new numbers; a corrected word keeps its id.
-- `yarn content:import <words.xlsx>` turns the tutor session's spreadsheet into `words.csv`; its `#` column becomes the id (`ru-a1-w-001`).
+- **A signed-in account's words and grammar live in the database** (`lesson`, `word`, `grammar_topic`, `grammar_card`, per user), and the Claude connector edits them. `content_state.version` is bumped by every change; `/api/sync` reports it and the app refetches `GET /api/content` when it differs, caching the result in IndexedDB.
+- **`content/` is the starting point**: built into the web app for signed-out use, and copied into an account the first time it is used (`ensureContent`). Changing these files later does not change an existing account.
+- `content/languages.json` lists the languages the app knows (a new language starts there); each has `content/<lang>/<level>/` with `words.csv`, `lessons.csv`, `grammar.md`, `topics.csv`, `grammar-cards.csv`. `parseLevelFiles` in core checks them, for the web build and the API alike.
+- **Card ids are permanent.** Progress is stored against them; changing or reusing an id loses or corrupts that card's history. New words get the next number (`ru-a1-w-170`); a corrected word keeps its id.
 - "target" is the language being learned (red, the card's Russian side), "native" the one the user speaks (blue, Serbian). Never hard-code Russian or Serbian in code; German comes later.
-- Grammar notes in `grammar.md`: one `## N. Title` per topic; `topics.csv` gives each number a slug and a one-line summary.
+- Grammar notes are Markdown, one topic each, rendered with `marked` and `decorateGrammarHtml` (stressed vowels and bold table cells in red).
+
+## Claude connector (MCP)
+
+- Ported from Holocron; its AGENTS.md "Claude connector (MCP)" section explains each choice. The API is the OAuth server (`@better-auth/oauth-provider`, same exact version as `better-auth`) and serves MCP at `/mcp`: stateless, a server and transport per request, JSON responses.
+- URLs outside `/api`: `/mcp`, `/.well-known/oauth-protected-resource/mcp`, `/.well-known/oauth-authorization-server/api/auth`. nginx must pass all three to the API.
+- Registration is open only for Claude's callback (`normalizeClientRegistration`), every client gets the `/consent` screen once, tokens are opaque hashed rows, token errors are rewritten to `invalid_grant`. `/login` resumes the flow with `oauthResumeUrl`.
+- The OAuth plugin refuses to start when `session` options are set without `storeSessionInDatabase: true`.
+- One scope, `cards`. Tools: `get_overview` (lessons, topics, boxes, due, most-missed cards), `list_words`, `add_words`, `update_word`, `remove_word`, `set_lesson_title`, `get_grammar_topic`, `save_grammar_topic`, `add_grammar_cards`, `update_grammar_card`, `remove_grammar_card`. The instructions in `apps/api/src/mcp/server.ts` ask for stress marks and Serbian in Latin script.
+- Test against the built API (`node dist/index.js`) on a throwaway `DATABASE_URL`; `RUSKY_API` points a second web dev server at it.
 
 ## Progress and sync
 
@@ -45,5 +54,5 @@
 ## Deployment
 
 - Same server and pattern as Holocron: push to `main` runs `.github/workflows/deploy.yml` (checks, then SSH: pull, install, back up the database, migrate, build, `pm2 restart rusky-api`).
-- nginx serves `apps/web/build` and proxies `/api` to `127.0.0.1:3010`; see README.md. `proxy_pass` must use `127.0.0.1`, not `localhost`.
+- nginx serves `apps/web/build` and proxies `/api`, `/mcp` and `/.well-known/oauth-` to `127.0.0.1:3010`; see README.md. `proxy_pass` must use `127.0.0.1`, not `localhost`. A certbot `location /.well-known/` block must not swallow the OAuth documents.
 - The API reads `apps/api/.env` on start, so a plain `pm2 restart` picks up env changes.

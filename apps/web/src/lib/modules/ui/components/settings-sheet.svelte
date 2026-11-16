@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Check, ChevronRight, RefreshCw, X } from '@lucide/svelte';
+  import { MCP_PATH } from '@rusky/core';
   import { content } from '$lib/modules/content/content.svelte';
   import { auth } from '$lib/modules/auth/auth.svelte';
   import { progress } from '$lib/modules/progress/progress.svelte';
@@ -13,6 +14,19 @@
   let { open = $bindable(false) }: { open?: boolean } = $props();
 
   let dialog = $state<HTMLDialogElement>();
+  let copied = $state(false);
+
+  const connectorUrl = `${window.location.origin}${MCP_PATH}`;
+
+  async function copyConnectorUrl() {
+    try {
+      await navigator.clipboard.writeText(connectorUrl);
+      copied = true;
+      setTimeout(() => (copied = false), 2000);
+    } catch {
+      // No clipboard over plain http; the address is on screen to copy by hand.
+    }
+  }
 
   $effect(() => {
     if (!dialog) return;
@@ -37,6 +51,7 @@
 
   async function signOut() {
     await progress.resetSync();
+    await content.clear();
     await auth.signOut();
   }
 </script>
@@ -107,6 +122,18 @@
     <span class="text-[15px] text-muted">{content.language.nativeName}</span>
   </div>
 
+  {#if content.levelCodes.length > 1}
+    <div class="mt-4">
+      <h3 class="mb-2 text-[15px]">Level</h3>
+      <Segmented
+        label="Level"
+        options={content.levelCodes.map((l) => ({ value: l, label: l.toUpperCase() }))}
+        value={content.level.level}
+        onchange={(v) => settings.update({ level: v })}
+      />
+    </div>
+  {/if}
+
   <div class="mt-4">
     <Switch
       label="Show English after flipping"
@@ -173,5 +200,29 @@
         <ChevronRight size={18} strokeWidth={2.2} aria-hidden="true" />
       </a>
     {/if}
+  </div>
+
+  <div class="mt-3 rounded-2xl border border-line p-4">
+    <div class={[MONO_LABEL, 'text-muted']}>CLAUDE</div>
+    <p class="mt-1.5 text-[15px] leading-snug">
+      Let Claude add the words and grammar from your lessons. In Claude, add a custom connector with
+      this address:
+    </p>
+    <div class="mt-3 flex items-center gap-2">
+      <code class="min-w-0 flex-1 truncate rounded-lg bg-seg px-3 py-2.5 font-mono text-[13px]">
+        {connectorUrl}
+      </code>
+      <button
+        type="button"
+        onclick={copyConnectorUrl}
+        class="h-11 shrink-0 rounded-xl border-[1.5px] border-strong px-4 text-[15px] font-semibold"
+      >
+        {copied ? 'Copied' : 'Copy'}
+      </button>
+    </div>
+    <p class="mt-2 text-[13px] leading-snug text-muted">
+      Claude asks you to sign in and allow it once. What it adds reaches your phone on the next
+      sync.
+    </p>
   </div>
 </dialog>

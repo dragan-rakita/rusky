@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { oauthResumeUrl } from '@rusky/core';
   import { goto } from '$app/navigation';
   import { auth } from '$lib/modules/auth/auth.svelte';
   import { progress } from '$lib/modules/progress/progress.svelte';
@@ -24,6 +25,12 @@
     try {
       if (mode === 'signup') await auth.signUp(email, password);
       else await auth.signIn(email, password);
+      const resume = oauthResumeUrl(window.location.search);
+      if (resume) {
+        // Claude sent the browser here mid-connection; the authorize step picks it up again.
+        window.location.href = resume;
+        return;
+      }
       await progress.sync();
       await goto('/');
     } catch (err) {

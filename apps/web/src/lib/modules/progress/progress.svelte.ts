@@ -1,7 +1,8 @@
-import { openDB, type IDBPDatabase } from 'idb';
 import { replay, type ReviewEvent, type SyncResponse } from '@rusky/core';
 import { auth } from '../auth/auth.svelte';
-import { DB_NAME, DB_VERSION, SYNC_DEBOUNCE_MS } from './constants';
+import { content } from '../content/content.svelte';
+import { SYNC_DEBOUNCE_MS } from './constants';
+import { openRuskyDb } from './db';
 
 type StoredReview = ReviewEvent & { synced: 0 | 1 };
 
@@ -30,19 +31,12 @@ class ProgressStore {
   lastSyncAt = $state<number | null>(null);
   syncError = $state<string | null>(null);
 
-  #db: Promise<IDBPDatabase> | null = null;
   #unsynced = new Set<string>();
   #cursor = 0;
   #timer: ReturnType<typeof setTimeout> | undefined;
 
   #open() {
-    this.#db ??= openDB(DB_NAME, DB_VERSION, {
-      upgrade(db) {
-        db.createObjectStore('reviews', { keyPath: 'id' });
-        db.createObjectStore('meta');
-      },
-    });
-    return this.#db;
+    return openRuskyDb();
   }
 
   async load() {
@@ -118,6 +112,7 @@ class ProgressStore {
 
       for (const e of outgoing) this.#unsynced.delete(e.id);
       this.#cursor = body.cursor;
+      void content.refresh(body.contentVersion);
       if (incoming.length) this.events = [...this.events, ...incoming];
       this.pending = this.#unsynced.size;
       this.lastSyncAt = at;

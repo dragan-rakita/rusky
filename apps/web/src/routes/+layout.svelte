@@ -4,6 +4,7 @@
   import { dev } from '$app/environment';
   import { page } from '$app/state';
   import { auth } from '$lib/modules/auth/auth.svelte';
+  import { content } from '$lib/modules/content/content.svelte';
   import { progress } from '$lib/modules/progress/progress.svelte';
   import { THEME_COLORS } from '$lib/modules/settings/constants';
   import { settings } from '$lib/modules/settings/settings.svelte';
@@ -26,8 +27,9 @@
   const showTabs = $derived(TAB_ROUTES.includes(page.route.id ?? ''));
 
   onMount(() => {
-    void progress
-      .load()
+    void content
+      .loadCached()
+      .then(() => progress.load())
       .then(() => auth.refresh())
       .then(() => progress.sync());
 
