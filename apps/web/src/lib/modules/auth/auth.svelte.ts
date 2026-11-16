@@ -11,6 +11,7 @@ const pick = (u: { id: string; email: string; name: string }): AuthUser => ({
 
 class AuthStore {
   user = $state<AuthUser | null>(null);
+  initial = $derived((this.user?.name || this.user?.email || '?').charAt(0).toUpperCase());
 
   init() {
     try {
@@ -59,6 +60,36 @@ class AuthStore {
   async signOut() {
     await client.signOut().catch(() => undefined);
     this.#set(null);
+  }
+
+  async updateName(name: string) {
+    const { error } = await client.updateUser({ name });
+    if (error) throw new Error(error.message || 'Could not save the name');
+    if (this.user) this.#set({ ...this.user, name });
+  }
+
+  async changePassword(current: string, next: string, signOutOthers: boolean) {
+    const { error } = await client.changePassword({
+      currentPassword: current,
+      newPassword: next,
+      revokeOtherSessions: signOutOthers,
+    });
+    if (error) throw new Error(error.message || 'Could not change the password');
+  }
+
+  /** How many devices are signed in, this one included; null when it cannot be asked. */
+  async deviceCount(): Promise<number | null> {
+    try {
+      const { data, error } = await client.listSessions();
+      return error || !data ? null : data.length;
+    } catch {
+      return null;
+    }
+  }
+
+  async signOutOthers() {
+    const { error } = await client.revokeOtherSessions();
+    if (error) throw new Error(error.message || 'Could not sign the other devices out');
   }
 
   /** The server lost the session (expired or signed out elsewhere). */

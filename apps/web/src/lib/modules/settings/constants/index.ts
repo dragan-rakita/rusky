@@ -20,7 +20,6 @@ export const NEW_PER_DAY_OPTIONS = [
 export const DEFAULT_SETTINGS: Settings = {
   language: 'ru',
   level: 'a1',
-  showEnglish: true,
   firstSide: 'target',
   newPerDay: 20,
   lastSetup: null,

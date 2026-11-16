@@ -34,10 +34,12 @@ export function levelOverview(s: Scope, today: string) {
 
   const boxes = Array<number>(MAX_BOX).fill(0);
   let notStarted = 0;
+  let done = 0;
   let due = 0;
   for (const c of cards) {
     const st = states.get(c.id);
     if (!st?.reviews) notStarted++;
+    else if (st.done) done++;
     else boxes[st.box - 1]++;
     if (isDue(st, today)) due++;
   }
@@ -82,6 +84,7 @@ export function levelOverview(s: Scope, today: string) {
     progress: {
       boxes: Object.fromEntries(boxes.map((n, i) => [`box${i + 1}`, n])),
       notStarted,
+      done,
       dueToday: due,
       reviewsLast7Days: lastWeek.length,
       daysPractisedLast7: new Set(lastWeek.map((e) => new Date(e.reviewedAt).toDateString())).size,

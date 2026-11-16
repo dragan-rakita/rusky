@@ -1,15 +1,26 @@
-import { languages, levels as builtIn } from 'virtual:rusky/content';
-import type { Card, ContentResponse } from '@rusky/core';
+import { languages } from 'virtual:rusky/content';
+import type { Card, ContentResponse, LevelContent } from '@rusky/core';
 import { openRuskyDb } from '../progress/db';
 import { settings } from '../settings/settings.svelte';
 
 const CACHE_KEY = 'content';
 
+const emptyLevel = (language: string, level: string): LevelContent => ({
+  language,
+  level,
+  lessons: [],
+  words: [],
+  topics: [],
+  grammarCards: [],
+});
+
 class ContentStore {
   languages = languages;
-  /** The signed-in account's own words and grammar; null means the content built into the app. */
+  /** The signed-in account's words and grammar; null until they are downloaded once. */
   remote = $state.raw<ContentResponse | null>(null);
-  levels = $derived(this.remote?.levels ?? builtIn);
+  /** The device's copy has been looked for, so a null `remote` means there is none. */
+  ready = $state(false);
+  levels = $derived(this.remote?.levels ?? {});
 
   language = $derived(languages.find((l) => l.code === settings.values.language) ?? languages[0]);
   levelCodes = $derived(
@@ -21,7 +32,7 @@ class ContentStore {
   level = $derived(
     this.levels[`${this.language.code}/${settings.values.level}`] ??
       this.levels[`${this.language.code}/${this.levelCodes[0]}`] ??
-      builtIn[`${this.language.code}/${this.language.levels[0]}`],
+      emptyLevel(this.language.code, settings.values.level),
   );
   cards = $derived<Card[]>([...this.level.words, ...this.level.grammarCards]);
   categories = $derived(new Set(this.level.words.map((w) => w.category)).size);
@@ -41,6 +52,8 @@ class ContentStore {
       this.remote = ((await db.get('meta', CACHE_KEY)) as ContentResponse | undefined) ?? null;
     } catch (e) {
       console.error('Could not read cached content', e);
+    } finally {
+      this.ready = true;
     }
   }
 
@@ -59,7 +72,7 @@ class ContentStore {
     }
   }
 
-  /** Back to the built-in content, after signing out. */
+  /** Forgets the downloaded content, after signing out. */
   async clear() {
     this.remote = null;
     try {

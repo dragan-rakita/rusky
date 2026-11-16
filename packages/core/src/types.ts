@@ -1,7 +1,11 @@
 /** Which side of a card: the language being learned, or the one you already speak. */
 export type Side = 'target' | 'native';
 
-export type Grade = 'again' | 'almost' | 'knew';
+/** `done` retires a card: it never comes back until it is graded again. */
+export type Grade = 'again' | 'almost' | 'knew' | 'done';
+
+/** The grades that keep a card in the boxes. */
+export type BoxGrade = Exclude<Grade, 'done'>;
 
 export type WordCard = {
   kind: 'word';
@@ -80,6 +84,8 @@ export type CardState = {
   reviews: number;
   introduced: string | null;
   lastGrade: Grade | null;
+  /** Retired with `done`: out of every review and every stack. */
+  done: boolean;
 };
 
 export type SyncRequest = {
@@ -92,6 +98,18 @@ export type SyncResponse = {
   events: ReviewEvent[];
   /** Bumped by every change to the account's words or grammar; a new value means refetch. */
   contentVersion: number;
+};
+
+/** An app the account let in through the connector, as the profile screen lists it. */
+export type Connection = {
+  clientId: string;
+  name: string;
+  /** Epoch milliseconds of the consent, or null when the server did not record it. */
+  connectedAt: number | null;
+};
+
+export type ConnectionsResponse = {
+  connections: Connection[];
 };
 
 /** A grammar topic as written: Markdown, before it is rendered for the app. */

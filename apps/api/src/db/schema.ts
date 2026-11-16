@@ -96,7 +96,7 @@ export const review = sqliteTable(
       .notNull()
       .references(() => user.id, { onDelete: 'cascade' }),
     cardId: text('card_id').notNull(),
-    grade: text('grade', { enum: ['again', 'almost', 'knew'] }).notNull(),
+    grade: text('grade', { enum: ['again', 'almost', 'knew', 'done'] }).notNull(),
     firstSide: text('first_side', { enum: ['target', 'native'] }).notNull(),
     reviewedAt: integer('reviewed_at').notNull(),
     receivedAt: integer('received_at').default(now).notNull(),

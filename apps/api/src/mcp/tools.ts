@@ -109,7 +109,7 @@ export function registerCardTools(server: McpServer, userId: string) {
     {
       title: 'Overview',
       description:
-        "Start here. The level's lessons (with word counts) and grammar topics (with drill-card counts), and how the learner is doing: cards per box, how many are due, practice in the last 7 days, and the cards they missed most in the last 30 days — the ones worth revising in a lesson.",
+        "Start here. The level's lessons (with word counts) and grammar topics (with drill-card counts), and how the learner is doing: cards per box, how many they marked done for good, how many are due, practice in the last 7 days, and the cards they missed most in the last 30 days — the ones worth revising in a lesson.",
       inputSchema: {
         ...levelArgs,
         today: z.iso

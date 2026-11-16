@@ -3,7 +3,7 @@
   import { plainText } from '@rusky/core';
   import { content } from '$lib/modules/content/content.svelte';
   import { sessionUrl } from '$lib/modules/practice/session';
-  import { progress } from '$lib/modules/progress/progress.svelte';
+  import { newId, progress } from '$lib/modules/progress/progress.svelte';
   import BoxMeter from '$lib/modules/ui/components/box-meter.svelte';
   import Stressed from '$lib/modules/ui/components/stressed.svelte';
 
@@ -34,6 +34,17 @@
     const s = progress.states.get(id);
     return s?.reviews ? s.box : 0;
   };
+
+  /** A word marked done goes back to box 1, due tomorrow. */
+  function bringBack(cardId: string) {
+    void progress.record({
+      id: newId(),
+      cardId,
+      grade: 'again',
+      reviewedAt: Date.now(),
+      firstSide: 'target',
+    });
+  }
 </script>
 
 <div class="flex items-baseline gap-2.5 px-5 pt-5">
@@ -98,16 +109,31 @@
             i > 0 && 'border-t border-row',
           ]}
         >
-          <span lang={content.language.code} class="min-w-0 flex-1 text-[17px] font-semibold">
+          <span lang={content.language.code} class="max-w-[58%] shrink-0 text-[17px] font-semibold">
             <Stressed text={w.target} />
           </span>
           <span
             lang={content.language.native}
-            class="max-w-[44%] truncate text-right text-[15px] text-muted"
+            class="min-w-0 flex-1 truncate text-right text-[15px] text-muted"
           >
             {w.native}
           </span>
-          <BoxMeter box={boxOf(w.id)} />
+          {#if progress.states.get(w.id)?.done}
+            <button
+              type="button"
+              onclick={() => bringBack(w.id)}
+              aria-label="Done. Bring {plainText(w.target)} back to practice"
+              class="-my-1 -mr-1.5 flex h-11 shrink-0 items-center px-1.5"
+            >
+              <span
+                class="rounded-full border-[1.5px] border-dashed border-strong px-2 py-0.5 text-xs font-semibold text-muted"
+              >
+                Done
+              </span>
+            </button>
+          {:else}
+            <BoxMeter box={boxOf(w.id)} />
+          {/if}
         </li>
       {/each}
     </ul>

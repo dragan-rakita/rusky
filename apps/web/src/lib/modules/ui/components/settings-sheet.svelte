@@ -1,32 +1,15 @@
 <script lang="ts">
-  import { Check, ChevronRight, RefreshCw, X } from '@lucide/svelte';
-  import { MCP_PATH } from '@rusky/core';
+  import { Check, X } from '@lucide/svelte';
   import { content } from '$lib/modules/content/content.svelte';
-  import { auth } from '$lib/modules/auth/auth.svelte';
-  import { progress } from '$lib/modules/progress/progress.svelte';
   import { settings } from '$lib/modules/settings/settings.svelte';
   import { NEW_PER_DAY_OPTIONS, THEME_MODES } from '$lib/modules/settings/constants';
-  import { MONO_LABEL, PLANNED_LANGUAGES } from '../constants';
+  import { PLANNED_LANGUAGES } from '../constants';
   import MiniCard from './mini-card.svelte';
   import Segmented from './segmented.svelte';
-  import Switch from './switch.svelte';
 
   let { open = $bindable(false) }: { open?: boolean } = $props();
 
   let dialog = $state<HTMLDialogElement>();
-  let copied = $state(false);
-
-  const connectorUrl = `${window.location.origin}${MCP_PATH}`;
-
-  async function copyConnectorUrl() {
-    try {
-      await navigator.clipboard.writeText(connectorUrl);
-      copied = true;
-      setTimeout(() => (copied = false), 2000);
-    } catch {
-      // No clipboard over plain http; the address is on screen to copy by hand.
-    }
-  }
 
   $effect(() => {
     if (!dialog) return;
@@ -37,23 +20,6 @@
   const planned = $derived(
     PLANNED_LANGUAGES.filter((p) => !content.languages.some((l) => l.code === p.code)),
   );
-
-  const syncedLabel = $derived.by(() => {
-    if (progress.syncing) return 'Syncing…';
-    if (progress.syncError) return progress.syncError;
-    if (!progress.lastSyncAt) return 'Not synced yet';
-    const minutes = Math.round((Date.now() - progress.lastSyncAt) / 60_000);
-    const when = minutes < 1 ? 'just now' : minutes < 60 ? `${minutes} min ago` : 'earlier today';
-    return progress.pending
-      ? `${progress.pending} reviews waiting · synced ${when}`
-      : `Synced ${when}`;
-  });
-
-  async function signOut() {
-    await progress.resetSync();
-    await content.clear();
-    await auth.signOut();
-  }
 </script>
 
 <dialog
@@ -135,14 +101,6 @@
   {/if}
 
   <div class="mt-4">
-    <Switch
-      label="Show English after flipping"
-      checked={settings.values.showEnglish}
-      onchange={(v) => settings.update({ showEnglish: v })}
-    />
-  </div>
-
-  <div class="mt-4">
     <h3 class="mb-2 text-[15px]">New words per day</h3>
     <Segmented
       label="New words per day"
@@ -160,69 +118,5 @@
       value={settings.theme}
       onchange={(v) => settings.setTheme(v)}
     />
-  </div>
-
-  <div class="mt-5 rounded-2xl border border-line p-4">
-    <div class={[MONO_LABEL, 'text-muted']}>SYNC</div>
-    {#if auth.user}
-      <div class="mt-1.5 text-[15px] font-medium">{auth.user.email}</div>
-      <div class={['mt-0.5 text-[13px]', progress.syncError ? 'text-target' : 'text-muted']}>
-        {syncedLabel}
-      </div>
-      <div class="mt-3 flex gap-2.5">
-        <button
-          type="button"
-          onclick={() => progress.sync()}
-          disabled={progress.syncing}
-          class="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-btn text-[15px] font-semibold text-btn-fg disabled:opacity-60"
-        >
-          <RefreshCw size={16} strokeWidth={2.2} aria-hidden="true" />
-          Sync now
-        </button>
-        <button
-          type="button"
-          onclick={signOut}
-          class="h-11 rounded-xl border-[1.5px] border-strong px-4 text-[15px] font-semibold"
-        >
-          Sign out
-        </button>
-      </div>
-    {:else}
-      <p class="mt-1.5 text-[15px] leading-snug">
-        Sign in to keep your boxes the same on your phone and laptop.
-      </p>
-      <a
-        href="/login"
-        onclick={() => (open = false)}
-        class="mt-3 flex h-11 items-center justify-between rounded-xl border-[1.5px] border-strong px-4 text-[15px] font-semibold"
-      >
-        Sign in
-        <ChevronRight size={18} strokeWidth={2.2} aria-hidden="true" />
-      </a>
-    {/if}
-  </div>
-
-  <div class="mt-3 rounded-2xl border border-line p-4">
-    <div class={[MONO_LABEL, 'text-muted']}>CLAUDE</div>
-    <p class="mt-1.5 text-[15px] leading-snug">
-      Let Claude add the words and grammar from your lessons. In Claude, add a custom connector with
-      this address:
-    </p>
-    <div class="mt-3 flex items-center gap-2">
-      <code class="min-w-0 flex-1 truncate rounded-lg bg-seg px-3 py-2.5 font-mono text-[13px]">
-        {connectorUrl}
-      </code>
-      <button
-        type="button"
-        onclick={copyConnectorUrl}
-        class="h-11 shrink-0 rounded-xl border-[1.5px] border-strong px-4 text-[15px] font-semibold"
-      >
-        {copied ? 'Copied' : 'Copy'}
-      </button>
-    </div>
-    <p class="mt-2 text-[13px] leading-snug text-muted">
-      Claude asks you to sign in and allow it once. What it adds reaches your phone on the next
-      sync.
-    </p>
   </div>
 </dialog>

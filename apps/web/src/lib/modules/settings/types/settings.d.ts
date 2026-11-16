@@ -15,7 +15,6 @@ type SetupChoice = {
 type Settings = {
   language: string;
   level: string;
-  showEnglish: boolean;
   firstSide: FirstSideChoice;
   newPerDay: number;
   lastSetup: SetupChoice | null;

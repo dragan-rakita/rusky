@@ -2,7 +2,9 @@
   import './layout.css';
   import { onMount } from 'svelte';
   import { dev } from '$app/environment';
+  import { goto } from '$app/navigation';
   import { page } from '$app/state';
+  import { PUBLIC_ROUTES } from '$lib/modules/auth/constants';
   import { auth } from '$lib/modules/auth/auth.svelte';
   import { content } from '$lib/modules/content/content.svelte';
   import { progress } from '$lib/modules/progress/progress.svelte';
@@ -24,7 +26,17 @@
       ?.setAttribute('content', THEME_COLORS[theme]);
   });
 
-  const showTabs = $derived(TAB_ROUTES.includes(page.route.id ?? ''));
+  const isPublic = $derived(PUBLIC_ROUTES.includes(page.route.id ?? ''));
+  // The remembered user is trusted until the server says otherwise, so the app opens offline.
+  const signedIn = $derived(!!auth.user);
+  const hasCards = $derived(!!content.remote);
+  const showTabs = $derived(signedIn && hasCards && TAB_ROUTES.includes(page.route.id ?? ''));
+
+  let online = $state(navigator.onLine);
+
+  $effect(() => {
+    if (!signedIn && !isPublic) void goto('/login', { replaceState: true });
+  });
 
   onMount(() => {
     void content
@@ -34,9 +46,12 @@
       .then(() => progress.sync());
 
     const resync = () => {
+      online = navigator.onLine;
       if (document.visibilityState === 'visible') void progress.sync();
     };
+    const offline = () => (online = false);
     window.addEventListener('online', resync);
+    window.addEventListener('offline', offline);
     document.addEventListener('visibilitychange', resync);
 
     if (!dev) {
@@ -45,6 +60,7 @@
 
     return () => {
       window.removeEventListener('online', resync);
+      window.removeEventListener('offline', offline);
       document.removeEventListener('visibilitychange', resync);
     };
   });
@@ -56,7 +72,32 @@
     showTabs && 'pb-28',
   ]}
 >
-  {@render children()}
+  {#if isPublic}
+    {@render children()}
+  {:else if signedIn && hasCards}
+    {@render children()}
+  {:else if signedIn && content.ready}
+    <div class="flex flex-1 flex-col items-center justify-center px-8 text-center">
+      <h1 class="text-2xl font-bold tracking-[-0.02em]">Getting your cards</h1>
+      <p class="mt-2 text-[15px] leading-snug text-muted" aria-live="polite">
+        {#if progress.syncing}
+          One moment…
+        {:else if !online}
+          Connect to the internet once, so your cards can be downloaded.
+        {:else}
+          {progress.syncError ?? 'Your cards have not been downloaded yet.'}
+        {/if}
+      </p>
+      <button
+        type="button"
+        onclick={() => progress.sync()}
+        disabled={progress.syncing}
+        class="mt-6 h-[52px] rounded-[14px] bg-btn px-6 text-base font-semibold text-btn-fg disabled:opacity-60"
+      >
+        Try again
+      </button>
+    </div>
+  {/if}
 </div>
 
 {#if showTabs}

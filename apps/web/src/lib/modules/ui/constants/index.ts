@@ -7,4 +7,8 @@ export const PLANNED_LANGUAGES = [
   { code: 'en', name: 'English', english: 'English' },
 ];
 
+/** The small outlined button at the end of a profile row. */
+export const PROFILE_ACTION =
+  'h-11 shrink-0 rounded-xl border-[1.5px] border-strong bg-card px-3.5 text-sm font-semibold text-ink disabled:opacity-50';
+
 export const MONO_LABEL = 'font-mono text-[11px] font-semibold tracking-[0.06em]';

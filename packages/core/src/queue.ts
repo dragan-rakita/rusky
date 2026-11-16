@@ -43,6 +43,7 @@ export function planReview(
 
 /**
  * A chosen stack: due cards first, then cards never seen, then the rest, cut to size.
+ * Cards marked done stay out.
  * Each group is shuffled so the same stack never runs in the same order.
  */
 export function buildStack(
@@ -57,6 +58,7 @@ export function buildStack(
   const rest: Card[] = [];
   for (const c of cards) {
     const s = states.get(c.id);
+    if (s?.done) continue;
     if (isDue(s, today)) due.push(c);
     else if (!s?.reviews) fresh.push(c);
     else rest.push(c);
