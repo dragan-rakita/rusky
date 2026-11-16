@@ -53,6 +53,9 @@
 
 ## Deployment
 
-- Same server and pattern as Holocron: push to `main` runs `.github/workflows/deploy.yml` (checks, then SSH: pull, install, back up the database, migrate, build, `pm2 restart rusky-api`).
-- nginx serves `apps/web/build` and proxies `/api`, `/mcp` and `/.well-known/oauth-` to `127.0.0.1:3010`; see README.md. `proxy_pass` must use `127.0.0.1`, not `localhost`. A certbot `location /.well-known/` block must not swallow the OAuth documents.
-- The API reads `apps/api/.env` on start, so a plain `pm2 restart` picks up env changes.
+- **Rusky shares the Holocron server** (holocron2, 2.31.58.8) at https://rusky.holocron66.xyz. Never change anything of Holocron's there: its nginx site, its pm2 process, its port 3000, its database, `~/opt/holocron`. Rusky owns only `~/opt/rusky`, `~/opt/rusky-data`, `/var/www/rusky`, `~/backups/rusky-*`, the `rusky` nginx site and the `rusky-api` pm2 process. (116.203.38.3 is a different machine.)
+- Push to `main` runs `.github/workflows/deploy.yml`: checks, then SSH as `dragan` with the `rusky-deploy@github-actions` key: `git checkout -B main origin/main`, install, back up the database, migrate, build, `rsync` the web build to `/var/www/rusky`, `pm2 restart rusky-api`, then wait for `/api/health`.
+- nginx serves `/var/www/rusky` (the home folder is 750, so a build under `~/opt` is unreadable to it) and proxies `/api/`, `/mcp` and `/.well-known/oauth-` to `127.0.0.1:3010`. The site is `deploy/nginx/rusky.conf`; certbot adds the HTTPS block. `proxy_pass` must use `127.0.0.1`, not `localhost`. Run `sudo nginx -t` before every reload, and give a reload a second before testing it.
+- The API reads `apps/api/.env` on start and pm2 holds none of those settings, so a plain `pm2 restart` picks up env changes. Never start it from a shell that sourced `.env`: pm2 would freeze those values, and `loadEnvFile` does not override them.
+- `rusky-api` takes about three seconds to listen after a restart.
+- `pm2 save` after changing the process list; check the saved list still holds `holocron` unchanged.

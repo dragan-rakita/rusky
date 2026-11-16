@@ -47,50 +47,14 @@ content         words, grammar notes and grammar cards
 
 ## Deploy
 
-Pushing to `main` deploys, the same way as Holocron. One-time server setup:
+Rusky runs at https://rusky.holocron66.xyz on the Holocron server (holocron2, 2.31.58.8), beside Holocron and touching nothing of it:
 
-1. `git clone` into `~/opt/rusky`, then `yarn install`.
-2. `apps/api/.env`: `DATABASE_URL` (an absolute path outside the repo), `ORIGIN=https://<domain>`, `PORT=3010`, `BETTER_AUTH_SECRET`.
-3. `yarn db:migrate && yarn build && pm2 start ecosystem.config.cjs && pm2 save`.
-4. nginx site:
+- `~/opt/rusky`: the checkout, which follows `main`. `apps/api/.env` holds the production settings (`ORIGIN`, `PORT=3010`, `DATABASE_URL` in `~/opt/rusky-data`, `BETTER_AUTH_SECRET`).
+- `rusky-api` in pm2, on `127.0.0.1:3010`.
+- `/var/www/rusky`: the built web app. nginx cannot read under the home folder (750), so the deploy copies the build here.
+- `/etc/nginx/sites-available/rusky`: [deploy/nginx/rusky.conf](deploy/nginx/rusky.conf), plus the HTTPS block certbot adds.
+- `~/backups/rusky-*.db`: a database snapshot before every deploy, the newest 30 kept.
 
-```nginx
-server {
-  server_name <domain>;
-  root /home/<user>/opt/rusky/apps/web/build;
+Pushing to `main` runs the checks, then deploys over SSH (`.github/workflows/deploy.yml`): pull, install, back up, migrate, build, copy the app to `/var/www/rusky`, restart `rusky-api`, and fail unless it answers again. The repository secrets are `SERVER_HOST`, `SERVER_USER` and `SERVER_SSH_KEY`, a key used only for this (`rusky-deploy@github-actions`, `restrict`ed in `authorized_keys`).
 
-  location /api/ {
-    proxy_pass http://127.0.0.1:3010;
-    proxy_set_header Host $host;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  }
-
-  # The Claude connector and its OAuth discovery documents.
-  location = /mcp {
-    proxy_pass http://127.0.0.1:3010;
-    proxy_set_header Host $host;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  }
-
-  location /.well-known/oauth- {
-    proxy_pass http://127.0.0.1:3010;
-    proxy_set_header Host $host;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  }
-
-  location /_app/immutable/ {
-    add_header Cache-Control "public, max-age=31536000, immutable";
-  }
-
-  location = /sw.js {
-    add_header Cache-Control "no-cache";
-  }
-
-  location / {
-    try_files $uri $uri/ /index.html;
-  }
-}
-```
-
-5. HTTPS with certbot, and the repository secrets `SERVER_HOST`, `SERVER_USER`, `SERVER_SSH_KEY`.
+HTTPS comes from Let's Encrypt through certbot (`sudo certbot --nginx -d rusky.holocron66.xyz --redirect`, run once on 2026-11-16), which renews it automatically.

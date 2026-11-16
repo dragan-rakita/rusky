@@ -29,7 +29,9 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to server
+      # Rusky shares the Holocron server (holocron2). Everything below stays inside
+      # ~/opt/rusky, /var/www/rusky, ~/backups/rusky-* and the rusky-api pm2 process.
+      - name: Deploy to holocron2
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -40,9 +42,11 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             if [ -s "$NVM_DIR/nvm.sh" ]; then . "$NVM_DIR/nvm.sh"; fi
             cd ~/opt/rusky
+            # The server checkout is never edited by hand, so it simply follows main.
+            git fetch origin main
+            git checkout -B main origin/main
             nvm use
             export PATH="$HOME/.local/bin:$(npm config get prefix)/bin:$PATH"
-            git pull origin main
             yarn install --frozen-lockfile
 
             # Snapshot before a migration can touch it; keep the 30 newest.
@@ -55,4 +59,16 @@ jobs:
 
             yarn db:migrate
             yarn build
+
+            # nginx serves the app from here: it cannot read the 750 home folder.
+            rsync -a --delete apps/web/build/ /var/www/rusky/
             pm2 restart rusky-api
+
+            # It takes about three seconds to listen again; fail the deploy if it never does.
+            for i in $(seq 1 20); do
+              if curl -fsS http://127.0.0.1:3010/api/health; then exit 0; fi
+              sleep 1
+            done
+            echo "rusky-api did not come back"
+            pm2 logs rusky-api --nostream --lines 40
+            exit 1
